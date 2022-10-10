@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 13:33:02 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/10 19:12:46 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/10 21:00:07 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ List	*check_echo(char *line, char *str, char *str2, List *environ)
 	{
 		if(ft_check_quotes(line, i) == 1)
 		{
+			error_fun();
 			printf("missing quotes>\n");
 			return(environ);
 		}
@@ -44,6 +45,7 @@ List	*check_echo(char *line, char *str, char *str2, List *environ)
 	{
 		if(ft_check_quotes(line, i) == 1)
 		{
+			error_fun();
 			printf("missing quotes>\n");
 			return(environ);
 		}
@@ -165,7 +167,6 @@ void	ft_echo(char *line, int i, List *environ)
 				i++;
 		}
 		count2 = count;
-		printf("%d      %d\n", count2, count);
 		while(line[c] != '\0')
 		{
 			if (line[c] == iii)

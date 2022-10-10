@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 10:04:36 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/04 17:30:02 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/10 20:59:50 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ char	*getAt(List *L, int pos)
 	i = 0;
 	if(isEmptyList(L))
 	{
+		error_fun();
 		printf("liste vide\n");
 		return(NULL);
 	}

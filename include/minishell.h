@@ -6,12 +6,15 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 10:09:59 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/10 18:19:51 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/10 21:21:00 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __MINISHELL_H__
 #define __MINISHELL_H__
+#define GREEN "\x1b[32m"
+#define RESET "\x1b[0m"
+#define RED "\033[91m"
 
 #include <stdio.h>
 #include <unistd.h>
@@ -56,7 +59,7 @@ List	*check_input(char *, List *);
 List	*check_export(char *, char *, List *);
 List	*ft_unsetenv(List *, char *);
 List	*check_unset(char *, char *, List *);
-void	check_path(List *, char *);
+int		check_path(List *, char *);
 void	ft_error_path(char *);
 void	ft_putstr_fd(char *, int);
 void	ft_error_echo(char *);
@@ -67,5 +70,13 @@ void	handle_shell(int);
 void	check_exit(char *, char *);
 int		ft_strcmp(char *, char *);
 int		ft_check_quotes(char *, int);
+int		ft_checker_exit(char *);
+void	ft_error_char(char *, int);
+void	check_spe_char(char *);
+int		ft_single_quotes(char *, char *);
+void	error_fun(void);
+void	header(void);
+char	*check_path_cd(List *, char *);
+List	*cd(char *);
 
 #endif
