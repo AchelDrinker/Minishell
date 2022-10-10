@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 13:37:23 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/07 17:06:08 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/10 19:28:28 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ int	check_pwd(char *line, char *str, List *environ)
 		i++;
 	if (i == 3)
 	{
-		echo_env("PWD", 0, environ);
+		if(line[i + 1] != '\0')
+			ft_putstr_fd("pwd: too many arguments\n", 2);
+		else
+			echo_env("PWD", 0, environ);
 		return(0);
 	}
 	else
