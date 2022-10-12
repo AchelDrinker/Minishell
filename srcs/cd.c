@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 21:09:43 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/12 16:47:11 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:58:58 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,17 +106,25 @@ List	*check_cd(char *line, char *str, List *environ)
 	}
 	else if (i == 5)
 	{
-		ft_strcpy(oldpwd, "OLDPWD=");
-		ft_strcat(oldpwd, ft_strcpylen(getAt(environ, find_env_pos(environ, "PWD=")), "PWD="));
-		//OLDPWD COMPLET
-		ft_strcpy(path, getAt(environ, find_env_pos(environ, "PWD=")));
-		path = ft_strcpylen(path, "PWD=");
-		lastSlash = ft_strrchr(path, '/');
-		ft_strcpy(lastSlash, "\0");
-		//PATH COMPLET
-		built_in_cd(path, environ, oldpwd);
-
-		return(environ);
+		if (line[5] != '.')
+		{
+			ft_strcpy(oldpwd, "OLDPWD=");
+			ft_strcat(oldpwd, ft_strcpylen(getAt(environ, find_env_pos(environ, "PWD=")), "PWD="));
+			//OLDPWD COMPLET
+			ft_strcpy(path, getAt(environ, find_env_pos(environ, "PWD=")));
+			path = ft_strcpylen(path, "PWD=");
+			lastSlash = ft_strrchr(path, '/');
+			ft_strcpy(lastSlash, "\0");
+			//PATH COMPLET
+			built_in_cd(path, environ, oldpwd);
+			return(environ);
+		}
+		else
+		{
+			error_fun();
+			ft_putstr_fd("error cd\n", 2);
+			return(environ);
+		}
 	}
 	else
 		return(environ);
