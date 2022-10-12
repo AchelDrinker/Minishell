@@ -6,15 +6,15 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 10:09:59 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/12 15:35:58 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/12 18:54:02 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __MINISHELL_H__
 #define __MINISHELL_H__
-#define GREEN "\x1b[32m"
-#define RESET "\x1b[0m"
-#define RED "\033[91m"
+#define GREEN			"\x1b[32m"
+#define RESET			"\x1b[0m"
+#define RED				"\033[91m"
 
 #include <stdio.h>
 #include <unistd.h>
@@ -25,6 +25,8 @@
 #include <stdbool.h>
 #include <limits.h>
 
+
+int		status;
 
 typedef struct Cell_t
 {
@@ -85,6 +87,6 @@ char	*ft_strrchr(const char *, int);
 char	*ft_strcpy(char *, char *);
 char	*ft_strcat(char *, const char *);
 int		find_env_pos(List *, char *);
-
+void	check_status(char *, char *);
 
 #endif

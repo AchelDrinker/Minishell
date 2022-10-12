@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 21:09:43 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/12 16:58:58 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/12 18:58:04 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,11 @@ void	built_in_cd(char *path, List *environ, char *oldpwd)
 	{
 		setAt(environ, oldpwd, ii);
 		setAt(environ, pwd, i);
+		status = 0;
 	}
 	else
 	{
+		status = 1;
 		error_fun();
 		ft_putstr_fd(" error chdir\n", 2);
 	}
@@ -121,6 +123,7 @@ List	*check_cd(char *line, char *str, List *environ)
 		}
 		else
 		{
+			status = 1;
 			error_fun();
 			ft_putstr_fd("error cd\n", 2);
 			return(environ);

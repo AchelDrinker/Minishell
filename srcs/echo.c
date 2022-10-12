@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 13:33:02 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/10 21:00:07 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/12 19:32:30 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,16 @@ List	*check_echo(char *line, char *str, char *str2, List *environ)
 	{
 		if(ft_check_quotes(line, i) == 1)
 		{
+			status = 1;
 			error_fun();
 			printf("missing quotes>\n");
 			return(environ);
 		}
 		else
 		{
+			status = 0;
+			if(line[i] == '$' && line[i + 1] == '?')
+				return(environ);
 			ft_echo(line, i, environ);
 			return(environ);
 		}
@@ -45,12 +49,16 @@ List	*check_echo(char *line, char *str, char *str2, List *environ)
 	{
 		if(ft_check_quotes(line, i) == 1)
 		{
+			status = 1;
 			error_fun();
 			printf("missing quotes>\n");
 			return(environ);
 		}
 		else
 		{
+			status = 0;
+			if(line[i + 1] == '$' && line[i + 2] == '?')
+				return(environ);
 			ft_echo_n(line, ++i, environ);
 			return(environ);
 		}

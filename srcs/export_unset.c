@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 15:54:20 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/11 17:00:47 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/12 19:03:07 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ List *check_export(char *line, char *str, List *environ)
 			printList(environ);
 			return(environ);
 		}
+		status = 0;
 	}
 	else
 		return(environ);
@@ -108,9 +109,15 @@ List *check_unset(char *line, char *str, List *environ)
 		if (ii > 0)
 		{
 			environ = ft_unsetenv(environ, line2);
+			status = 0;
 		}
 		else
+		{
+			status = 1;
+			error_fun();
+			ft_putstr_fd("error unset",2);
 			return(environ);
+		}
 	}
 	free(line2);
 	return(environ);

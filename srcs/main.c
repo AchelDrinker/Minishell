@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:04:41 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/12 16:08:24 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/12 19:33:41 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ List	*check_input(char *line, List *environ)
 {
 	//check_pipe_quote(line);
 	//check_redirection(line);
-
+	check_status(line, "echo $?");
 	environ = check_echo(line, "echo", " -n", environ);
 	check_pwd(line, "pwd", environ);
 	check_env(line, "env", environ);
@@ -53,5 +53,6 @@ int		main(int argc, char **argv, char **envp)
 		}
 	}
 	environ = freeList(environ);
+	status = 0;
 	return (0);
 }

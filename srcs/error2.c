@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 20:44:04 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/10 20:58:45 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/12 19:11:42 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void check_spe_char(char *line)
 
 void ft_error_char(char *str, int i)
 {
+	status = 1;
 	error_fun();
 	printf("wrong character: %c\n", str[i]);
 }
@@ -52,4 +53,13 @@ int ft_single_quotes(char *line, char *s1)
 		count++;
 	}
 	return (count);
+}
+
+
+void	check_status(char *line, char *line2)
+{
+	if(strcmp(line, line2) == 0)
+		printf("Error value : %d\n", status);
+	else
+		return;
 }

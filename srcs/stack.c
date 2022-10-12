@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 10:04:36 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/11 10:10:15 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/12 18:57:38 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ char	*getAt(List *L, int pos)
 	i = 0;
 	if(isEmptyList(L))
 	{
+		status = 1;
 		error_fun();
 		printf("error : empty list\n");
 		return(NULL);
