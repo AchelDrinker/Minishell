@@ -6,80 +6,118 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 21:09:43 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/10 21:23:46 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:47:11 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*check_path_cd(List *environ, char *line)
+char	*ft_strcpylen(char *buff, char *str)
 {
-	List *prec;
-	char *buff;
+	int i;
+	int ii;
+	int len;
+	char *buff2;
 
-	prec = environ;
-	buff = malloc(sizeof(line));
-	while (ft_strnstr(prec, "PATH", ft_strlen("PATH")) == 0 && prec->next != NULL)
-		prec = prec->next;
-	if(prec->next == NULL)
+	i = 0;
+	ii = 0;
+	len = ft_strlen(buff);
+	buff2 = malloc(sizeof(buff - ft_strlen(str)));
+	while(buff[i] == str[i] && (buff[i] != '\0' || str[i] != '\0'))
+		i++;
+	if(str[0] == 'c' && str[1] == 'd' && str[2] == ' ')
 	{
-		free(buff);
-		return(NULL);
+		buff2[ii] = 47;
+		ii++;
+	}
+	while(buff[i] != '\0')
+	{
+		buff2[ii] = buff[i];
+		i++;
+		ii++;
+	}
+	buff2[ii] = '\0';
+	return(buff2);
+}
+
+void	built_in_cd(char *path, List *environ, char *oldpwd)
+{
+	int i;
+	int ii;
+	char *pwd;
+
+	pwd =  malloc(10000 * sizeof(char));
+	ft_strcpy(pwd, "PWD=");
+	ft_strcat(pwd, path);
+	//PWD COMPLET
+	i = find_env_pos(environ, "PWD");
+	ii = find_env_pos(environ, "OLDPWD");
+	if(chdir(path) == 0)
+	{
+		setAt(environ, oldpwd, ii);
+		setAt(environ, pwd, i);
 	}
 	else
 	{
-		buff = prec->data;
-		return(buff);
+		error_fun();
+		ft_putstr_fd(" error chdir\n", 2);
 	}
 }
 
-char	*check_path_pwd(List *environ, char *line)
+List	*check_cd(char *line, char *str, List *environ)
 {
-	List *prec;
+	int i;
+	char *path;
 	char *buff;
+	char *oldpwd;
+	char *lastSlash;
 
-	prec = environ;
-	buff = malloc(sizeof(line));
-	while (ft_strnstr(prec, "PWD", ft_strlen("PWD")) == 0 && prec->next != NULL)
-		prec = prec->next;
-	if(prec->next == NULL)
+	i = 0;
+
+	oldpwd = malloc(10000 * sizeof(char));
+	path = malloc(10000 * sizeof(char));
+	while (line[i] == str[i] && (line[i] != '\0' || str[i] != '\0'))
+		i++;
+	if (i == 3)
 	{
-		free(buff);
-		return(NULL);
+		if (line[3] == 47)
+		{
+			ft_strcpy(oldpwd, "OLDPWD=");
+			ft_strcat(oldpwd, ft_strcpylen(getAt(environ, find_env_pos(environ, "PWD=")), "PWD="));
+			//OLDPWD COMPLET
+			path = ft_strcpylen(line, "cd /");
+			//PATH COMPLET
+			built_in_cd(path, environ, oldpwd);
+		}
+		else
+		{
+			ft_strcpy(oldpwd, "OLDPWD=");
+			ft_strcat(oldpwd, ft_strcpylen(getAt(environ, find_env_pos(environ, "PWD=")), "PWD="));
+			//OLDPWD COMPLET
+			buff = malloc(sizeof(line));
+			ft_strcpy(path, getAt(environ, find_env_pos(environ, "PWD=")));
+			buff = ft_strcpylen(line, "cd ");
+			ft_strcat(path, buff);
+			path = ft_strcpylen(path, "PWD=");
+			//PATH COMPLET
+			built_in_cd(path, environ, oldpwd);
+		}
+		return(environ);
+	}
+	else if (i == 5)
+	{
+		ft_strcpy(oldpwd, "OLDPWD=");
+		ft_strcat(oldpwd, ft_strcpylen(getAt(environ, find_env_pos(environ, "PWD=")), "PWD="));
+		//OLDPWD COMPLET
+		ft_strcpy(path, getAt(environ, find_env_pos(environ, "PWD=")));
+		path = ft_strcpylen(path, "PWD=");
+		lastSlash = ft_strrchr(path, '/');
+		ft_strcpy(lastSlash, "\0");
+		//PATH COMPLET
+		built_in_cd(path, environ, oldpwd);
+
+		return(environ);
 	}
 	else
-	{
-		buff = prec->data;
-		return(buff);
-	}
-}
-
-List	*cd(List *environ, char *path)
-{
-	char	*oldpwd = NULL;
-	char	*pwd = NULL;
-	char	*pwd_ptr = NULL;
-
-	if (path == NULL)
-		return;
-	if (chdir(path) == 0)
-	{
-		pwd = strrchr(get_env_var("PWD="), '=') + 1;
-		oldpwd = strrchr(get_env_var("OLDPWD="), '=') + 1;
-
-		if (oldpwd != NULL && pwd != NULL) {
-			strcpy(oldpwd, pwd);
-		}
-		if (pwd != NULL) {
-			pwd = &pwd[-strlen("PWD=")];
-			pwd_ptr = built_in_pwd();
-			strcpy(pwd, pwd_ptr);
-			free(pwd_ptr);
-			pwd_ptr = NULL;
-		}
-	}
-	else
-	{
-		perror("chdir");
-	}
+		return(environ);
 }

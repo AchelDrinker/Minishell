@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 10:04:36 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/10 18:18:58 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/12 15:34:49 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,4 +129,22 @@ void	printCell_n(List *L, int pos, int depart)
 	}
 	str[c] = '\0';
 	printf("%s", str);
+}
+
+int		find_env_pos(List *environ, char *str)
+{
+	int i;
+	List *prec;
+
+	prec = environ;
+	i = 0;
+	while ((ft_strnstr(prec, str, ft_strlen(str)) == 0) && prec != NULL)
+	{
+		prec = prec->next;
+		i++;
+	}
+	if (prec == NULL)
+		return(-1);
+	else
+		return(i);
 }

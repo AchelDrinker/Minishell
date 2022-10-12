@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 12:00:07 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/10 20:57:13 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/11 11:23:19 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void check_exit(char *line, char *s1)
 	if(ft_checker_exit(line) > 1)
 	{
 		error_fun();
-		printf("command not found\n");
+		ft_putstr_fd("exit : command not found\n", 2);
 	}
 	else if(ft_strcmp(line, s1) == 0)
 		exit(0);

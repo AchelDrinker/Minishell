@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 15:54:20 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/10 20:16:19 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/11 17:00:47 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,10 @@ List *check_export(char *line, char *str, List *environ)
 			return(environ);
 		}
 		else
-			
+		{
 			printList(environ);
 			return(environ);
+		}
 	}
 	else
 		return(environ);

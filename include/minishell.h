@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 10:09:59 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/10 21:21:00 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/12 15:35:58 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <signal.h>
+#include <stdbool.h>
+#include <limits.h>
 
 
 typedef struct Cell_t
@@ -76,7 +78,13 @@ void	check_spe_char(char *);
 int		ft_single_quotes(char *, char *);
 void	error_fun(void);
 void	header(void);
-char	*check_path_cd(List *, char *);
-List	*cd(char *);
+List	*check_cd(char *, char *, List *);
+char	*ft_strcpylen(char *, char *);
+int		ft_strncmp(const char *, const char *, size_t);
+char	*ft_strrchr(const char *, int);
+char	*ft_strcpy(char *, char *);
+char	*ft_strcat(char *, const char *);
+int		find_env_pos(List *, char *);
+
 
 #endif

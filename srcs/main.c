@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:04:41 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/10 21:05:32 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:08:24 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,14 @@
 List	*check_input(char *line, List *environ)
 {
 	//check_pipe_quote(line);
+	//check_redirection(line);
 
-	//check_path(environ, line);
 	environ = check_echo(line, "echo", " -n", environ);
 	check_pwd(line, "pwd", environ);
 	check_env(line, "env", environ);
 	environ = check_export(line, "export", environ);
 	environ = check_unset(line, "unset", environ);
-	/*check_cd(line, "cd", envp); FAIRE AVEC CHDIR et FORK
-	ft_error();*/
+	environ = check_cd(line, "cd ..", environ);
 	check_exit(line, "exit");
 	return(environ);
 }
