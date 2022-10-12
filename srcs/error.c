@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 12:00:07 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/12 19:32:05 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/12 19:58:09 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ void check_exit(char *line, char *s1)
 {
 	char s2 [] = "'exit'";
 
-	if((ft_single_quotes(line, s1) == 4 || ft_strcmp(line, s1) == 0 || ft_strcmp(line, s2) == 0) && ft_checker_exit(line) > 1)
+	if(ft_checker_exit(line) > 0)
 	{
-		status = 1;
+		status = 255;
 		error_fun();
 		ft_putstr_fd("exit : command not found\n", 2);
 	}
@@ -67,15 +67,18 @@ int ft_checker_exit(char *line)
 {
 	int i;
 	int count;
+	char *substr;
+
+
 	count = 0;
 	i = 0;
-
-	while(line[i] != '\0')
+	substr = ft_strstr(line, "exit");
+	if (!substr)
+		return(0);
+	while(substr[i] != '\0' && substr[i] != '|')
 	{
-		if(line[i] == ' ')
-		{
+		if (substr[i] == ' ')
 			count += 1;
-		}
 		i++;
 	}
 	return (count);

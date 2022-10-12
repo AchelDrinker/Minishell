@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 10:09:59 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/12 18:54:02 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/12 19:58:02 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ char	*ft_strcpy(char *, char *);
 char	*ft_strcat(char *, const char *);
 int		find_env_pos(List *, char *);
 void	check_status(char *, char *);
+char	*ft_strstr(char *, char *);
 
 #endif

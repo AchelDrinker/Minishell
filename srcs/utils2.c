@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 15:09:54 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/11 14:44:56 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/12 19:57:41 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,26 @@ void	*ft_memcpy(void *restrict dst, const void *restrict src, size_t size)
 		i++;
 	}
 	return (dst);
+}
+
+char *ft_strstr(char *str, char *to_find)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		j = 0;
+		while (to_find[j] == str[i + j])
+		{
+			if (to_find[j + 1] == '\0')
+			{
+				return (str + i);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (0);
 }
