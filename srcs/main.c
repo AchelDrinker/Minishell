@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:04:41 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/12 19:59:42 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/19 17:43:05 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 List	*check_input(char *line, List *environ)
 {
-	//check_pipe_quote(line);
 	//check_redirection(line);
+	check_exec(environ, line);
 	check_status(line, "echo $?");
 	environ = check_echo(line, "echo", " -n", environ);
 	check_pwd(line, "pwd", environ);
@@ -33,10 +33,15 @@ int		main(int argc, char **argv, char **envp)
 	(void)argv;
 
 	List *environ;
+	char **parsed_input;
+	int i;
+
 	environ = emptyList();
 	environ = copyEnv(environ, envp);
+	i = 0;
 
 	header();
+	signal_trap();
 	while ((line = readline("minishell> ")) != 0)
 	{
 		add_history(line);
@@ -44,14 +49,30 @@ int		main(int argc, char **argv, char **envp)
 		if (*line != '\0')
 		{
 			check_exit(line, "exit");
+			parsed_input = parse(parsed_input, line);
 			if (check_path(environ, line) == 0)
 			{
 				check_spe_char(line);
-				environ = check_input(line, environ);
+				while(parsed_input[i] != NULL)
+				{
+					environ = check_input(parsed_input[i], environ);
+					i++;
+				}
 			}
+			i = 0;
 		}
 	}
 	environ = freeList(environ);
 	status = 0;
+	i = 0;
+	if (*line != '\0')
+	{
+		while(parsed_input[i] != NULL)
+		{
+			free(parsed_input[i]);
+			i++;
+		}
+	}
+	free(line);
 	return (0);
 }

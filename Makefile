@@ -6,12 +6,12 @@
 #    By: humartin <humartin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 11:51:50 by humartin          #+#    #+#              #
-#    Updated: 2022/10/10 20:54:09 by humartin         ###   ########.fr        #
+#    Updated: 2022/10/19 12:51:44 by humartin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC := gcc
-CFLAGS := -Wall -Werror -Wextra
+CFLAGS := -Wall -Wextra -Werror
 LIB := -L/Users/humartin/.brew/opt/readline/lib -lreadline
 LIB_BIS := -I./include -I/Users/humartin/.brew/opt/readline/include
 
@@ -34,7 +34,7 @@ all : $(NAME)
 
 $(NAME): $(OBJ) | $(BIN_DIR)
 	@echo $(CURSIVE)$(GRAY)" -- Making $(NAME) --"$(NONE)
-	$(CC) $(CFLAGS) $(LIB) $(LIB_BIS) $^ -o $@
+	$(CC) $(LIB) $(LIB_BIS) $^ -o $@
 	@echo "$(NAME): $(GREEN)$(NAME) was created !$(NONE)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)

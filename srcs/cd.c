@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 21:09:43 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/12 18:58:04 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/19 12:17:37 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strcpylen(char *buff, char *str)
 	i = 0;
 	ii = 0;
 	len = ft_strlen(buff);
-	buff2 = malloc(sizeof(buff - ft_strlen(str)));
+	buff2 = malloc(sizeof(buff - ft_strlen(str)) + 1);
 	while(buff[i] == str[i] && (buff[i] != '\0' || str[i] != '\0'))
 		i++;
 	if(str[0] == 'c' && str[1] == 'd' && str[2] == ' ')
@@ -73,6 +73,7 @@ List	*check_cd(char *line, char *str, List *environ)
 	char *buff;
 	char *oldpwd;
 	char *lastSlash;
+	int count;
 
 	i = 0;
 
@@ -110,13 +111,23 @@ List	*check_cd(char *line, char *str, List *environ)
 	{
 		if (line[5] != '.')
 		{
+			count = 1;
 			ft_strcpy(oldpwd, "OLDPWD=");
 			ft_strcat(oldpwd, ft_strcpylen(getAt(environ, find_env_pos(environ, "PWD=")), "PWD="));
 			//OLDPWD COMPLET
+			while (line[i] != '\0' && (line[i] == '/' && line[i + 1] == '.' && line[i + 2] == '.'))
+			{
+				count += 1;
+				i += 3;
+			}
 			ft_strcpy(path, getAt(environ, find_env_pos(environ, "PWD=")));
 			path = ft_strcpylen(path, "PWD=");
-			lastSlash = ft_strrchr(path, '/');
-			ft_strcpy(lastSlash, "\0");
+			while(count > 0)
+			{
+				lastSlash = ft_strrchr(path, '/');
+				ft_bzero(lastSlash, ft_strlen(lastSlash));
+				count--;
+			}
 			//PATH COMPLET
 			built_in_cd(path, environ, oldpwd);
 			return(environ);

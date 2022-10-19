@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 10:09:59 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/12 19:58:02 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:55:48 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,27 @@
 #define RESET			"\x1b[0m"
 #define RED				"\033[91m"
 
+#define F_OK 0
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <signal.h>
-#include <stdbool.h>
-#include <limits.h>
+# include <sys/types.h>
+# include <sys/uio.h>
+# include <sys/wait.h>
+# include <fcntl.h>
 
 
 int		status;
+
+
+typedef struct s_tube
+{
+	pid_t	pid;
+}t_tube;
 
 typedef struct Cell_t
 {
@@ -89,5 +99,19 @@ char	*ft_strcat(char *, const char *);
 int		find_env_pos(List *, char *);
 void	check_status(char *, char *);
 char	*ft_strstr(char *, char *);
+char	**ft_split(char const *, char);
+int		ft_splitlen(char const *, char);
+void	check_pipe(char *, List *);
+void	check_pipe2(char *, List *, int);
+char	*ft_substr(char const *, unsigned int, size_t);
+char	**split_string(char *, char *, int *);
+char	**split_input(char *, char *, int *);
+void	exec_cmd(char **, char **);
+void	exec_com(char **, char **, int *);
+void	exec_bin_ls(char **, char **, int *);
+void	check_exec(List *, char *);
+void	ft_bzero(void *, size_t);
+void	*ft_memset(void *, int, size_t);
+char	**parse(char **, char *);
 
 #endif

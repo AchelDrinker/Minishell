@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 13:37:23 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/12 19:04:52 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/19 17:17:51 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	check_pwd(char *line, char *str, List *environ)
 		i++;
 	if (i == 3)
 	{
-		if(line[i + 1] != '\0')
+		if(line[i] != '\0')
 		{
 			status = 1;
 			error_fun();
