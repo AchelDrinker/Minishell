@@ -6,23 +6,48 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:04:41 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/19 17:43:05 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/20 16:16:40 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+int		isbuiltin(char *line)
+{
+	if(strncmp(line, "cd ", 3) == 0)
+		return(0);
+	else if(strncmp(line, "export ", 7) == 0)
+		return(0);
+	else if(strncmp(line, "unset ", 6) == 0)
+		return(0);
+	else if(strncmp(line, "echo ", 5) == 0)
+		return(0);
+	else if(strncmp(line, "pwd ", 4) == 0)
+		return(0);
+	else if(strncmp(line, "env ", 4) == 0)
+		return(0);
+	else
+		return(1);
+
+}
+
 List	*check_input(char *line, List *environ)
 {
-	//check_redirection(line);
-	check_exec(environ, line);
-	check_status(line, "echo $?");
-	environ = check_echo(line, "echo", " -n", environ);
-	check_pwd(line, "pwd", environ);
-	check_env(line, "env", environ);
-	environ = check_export(line, "export", environ);
-	environ = check_unset(line, "unset", environ);
-	environ = check_cd(line, "cd ..", environ);
+	if(isbuiltin(line) == 1)
+	{
+		//check_redirection(line);
+		check_exec(environ, line);
+	}
+	else
+	{
+		check_status(line, "echo $?");
+		environ = check_echo(line, "echo", " -n", environ);
+		check_pwd(line, "pwd", environ);
+		check_env(line, "env", environ);
+		environ = check_export(line, "export", environ);
+		environ = check_unset(line, "unset", environ);
+		environ = check_cd(line, "cd ..", environ);
+	}
 	return(environ);
 }
 
@@ -64,15 +89,6 @@ int		main(int argc, char **argv, char **envp)
 	}
 	environ = freeList(environ);
 	status = 0;
-	i = 0;
-	if (*line != '\0')
-	{
-		while(parsed_input[i] != NULL)
-		{
-			free(parsed_input[i]);
-			i++;
-		}
-	}
 	free(line);
 	return (0);
 }

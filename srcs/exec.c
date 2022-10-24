@@ -6,11 +6,13 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:05:05 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/19 14:39:54 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/20 16:19:44 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+static int count_fork = 0;
 
 void	check_exec(List *environ, char *line)
 {
@@ -19,7 +21,7 @@ void	check_exec(List *environ, char *line)
 	int		count_s = 0;
 	path = getAt(environ, find_env_pos(environ, "PATH="));
 	char	**split_strings = split_string(path, ":", &count_strings);
-	char	**split_line = split_input(line, " /", &count_s);
+	char	**split_line = split_input(line, " /|", &count_s);
 
 	if(ft_strcmp(line, "/bin/ls") == 0)
 		exec_bin_ls(split_strings, split_line, &count_strings);
@@ -86,7 +88,11 @@ char **split_input(char *string, char *separators, int *count)
 		while(i < len)
 		{
 			if(strchr(separators, string[i]) == NULL)
+			{
+				if (string[i] == '|')
+					count_fork++;
 				break;
+			}
 			i++;
 		}
 		//keep track of wich character of the substring are we at
@@ -178,23 +184,52 @@ char **split_string(char *string, char *separators, int *count)
 	free(strings);
 }
 
-void	exec_cmd(char **split, char **split_line)
+// void	exec_cmd(char **split, char **split_line)
+// {
+// 	pid_t	pid = 0;
+// 	int		status = 0;
+
+// 	pid = fork();
+// 	if (pid == -1)
+// 		perror(GREEN"fork"RESET);
+// 	else if (pid > 0)
+// 	{
+// 		waitpid(pid, &status, 0);
+// 		kill(pid, SIGTERM);
+// 	}
+// 	else
+// 	{
+// 		execve(split[0], split_line, NULL);
+// 		exit(EXIT_FAILURE);
+// 	}
+// }
+
+
+void	exec_cmd(char **split, char **split_line, int count_fork)
 {
 	pid_t	pid = 0;
 	int		status = 0;
+	int i;
 
-	pid = fork();
-	if (pid == -1)
-		perror(GREEN"fork"RESET);
-	else if (pid > 0)
+	i = 0;
+
+	while(split[i] != NULL)
 	{
-		waitpid(pid, &status, 0);
-		kill(pid, SIGTERM);
-	}
-	else
-	{
-		execve(split[0], split_line, NULL);
-		exit(EXIT_FAILURE);
+		pid = fork();
+		if (pid == -1)
+			perror(GREEN"fork"RESET);
+		else if (pid > 0)
+		{
+			waitpid(pid, &status, 0);
+			kill(pid, SIGTERM);
+		}
+		else
+		{
+			execve(split[i], split_line, NULL);
+			exit(EXIT_FAILURE);
+		}
+		i++;
+		count_fork--;
 	}
 }
 
@@ -215,9 +250,10 @@ void	exec_com(char **sp, char **sl, int *count)
 			i++;
 			j++;
 		}
+		printf("%s\n", buff);
 		path_bin = buff;
 		sl[2] = NULL;//a definir une place
-		exec_cmd(&path_bin, &sl[0]);
+		exec_cmd(&path_bin, &sl[0], count_fork);
 		free(buff);
 }
 
@@ -240,7 +276,7 @@ void	exec_bin_ls(char **sp, char **sl, int *count)
 		}
 		path_bin_ls = buff;
 		sl[2] = NULL;
-		exec_cmd(&path_bin_ls, &sl[1]);
+		exec_cmd(&path_bin_ls, &sl[1], count_fork);
 		free(buff);
 }
 
