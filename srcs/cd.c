@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 21:09:43 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/19 12:17:37 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/24 13:44:49 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,10 @@ char	*ft_strcpylen(char *buff, char *str)
 {
 	int i;
 	int ii;
-	int len;
 	char *buff2;
 
 	i = 0;
 	ii = 0;
-	len = ft_strlen(buff);
 	buff2 = malloc(sizeof(buff - ft_strlen(str)) + 1);
 	while(buff[i] == str[i] && (buff[i] != '\0' || str[i] != '\0'))
 		i++;

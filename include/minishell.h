@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 10:09:59 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/20 16:12:20 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/24 16:50:13 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,16 @@ void	exec_bin_ls(char **, char **, int *);
 void	check_exec(List *, char *);
 void	ft_bzero(void *, size_t);
 void	*ft_memset(void *, int, size_t);
-char	**parse(char **, char *);
+char	**parse(char **, char *, char);
 int		isbuiltin(char *);
+char	**parse_multiple(char **, char *, char *);
+int		isRedirection(char *);
+void	imParsingThisShit(char **, char *, List *);
+int		ft_check_corresp_toutsimple(char *, char *);
+int		ft_check_corresp(char *, char *);
+void	ft_redi_delimiteur(char **, char *, int , int );
+void	ft_re_app(char **, char **, List *);
+void	ft_re_in(char **, char **, List *);
+void	ft_re_out(char **, char **, List *);
 
 #endif

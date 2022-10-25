@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 13:37:23 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/19 17:17:51 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/24 13:41:16 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,8 @@ int	editBin(List *L, char *line, int i)
 int	check_pwd(char *line, char *str, List *environ)
 {
 	int i;
-	int ii;
 
 	i = 0;
-	ii = 0;
 	while (line[i] == str[i] && (line[i] != '\0' || str[i] != '\0'))
 		i++;
 	if (i == 3)

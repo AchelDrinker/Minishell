@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strjoin_split.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 10:51:42 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/13 06:17:28 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/24 17:37:00 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,13 @@ int	ft_splitlen(char const *s, char c)
 char	**ft_split(char const *s, char c)
 {
 	char	**str;
+	int		z;
+	int		y;
 	size_t	i;
 	size_t	len;
 
+	z = 0;
+	y = 0;
 	if (!s)
 		return (0);
 	i = 0;
@@ -100,8 +104,15 @@ char	**ft_split(char const *s, char c)
 		{
 			len = 0;
 			while (*s && *s != c && ++len)
+			{
+				if (*s == 34)
+					z += 1;
+				if (*s == 39)
+					y += 1;
 				++s;
-			str[i++] = ft_substr(s - len, 0, len);
+			}
+			if (y % 2 == 0 || z % 2 == 0)
+				str[i++] = ft_substr(s - len, 0, len);
 		}
 		else
 			++s;

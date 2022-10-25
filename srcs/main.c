@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:04:41 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/20 16:16:40 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/24 17:39:31 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ List	*check_input(char *line, List *environ)
 {
 	if(isbuiltin(line) == 1)
 	{
-		//check_redirection(line);
 		check_exec(environ, line);
+		//check_redirection(line);
 	}
 	else
 	{
@@ -67,14 +67,20 @@ int		main(int argc, char **argv, char **envp)
 
 	header();
 	signal_trap();
-	while ((line = readline("minishell> ")) != 0)
+	while ((line = readline("FlexShell> ")) != 0)
 	{
 		add_history(line);
 		signal_trap();
 		if (*line != '\0')
 		{
 			check_exit(line, "exit");
-			parsed_input = parse(parsed_input, line);
+			if(isRedirection(line) == 1)
+				parsed_input = parse(parsed_input, line, '|');
+			else
+				parsed_input = parse(parsed_input, line, '|');
+
+
+
 			if (check_path(environ, line) == 0)
 			{
 				check_spe_char(line);
