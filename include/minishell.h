@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 10:09:59 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/24 16:50:13 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/25 11:30:51 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	check_pipe2(char *, List *, int);
 char	*ft_substr(char const *, unsigned int, size_t);
 char	**split_string(char *, char *, int *);
 char	**split_input(char *, char *, int *);
-void	exec_cmd(char **, char **, int);
+void	exec_cmd(char **, char **/*, int*/);
 void	exec_com(char **, char **, int *);
 void	exec_bin_ls(char **, char **, int *);
 void	check_exec(List *, char *);
@@ -123,5 +123,6 @@ void	ft_redi_delimiteur(char **, char *, int , int );
 void	ft_re_app(char **, char **, List *);
 void	ft_re_in(char **, char **, List *);
 void	ft_re_out(char **, char **, List *);
+void	check_redirection(char *, List *);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 13:52:00 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/24 16:50:10 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/25 13:17:18 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	check_redirection(char *line, List *environ)
 		return ;
 	else
 	{
-		parsed_shit = NULL;
+
+		parsed_shit = malloc(sizeof(line));
 		parsed_shit[0] = line;
 		imParsingThisShit(parsed_shit, line, environ);
 	}
@@ -44,7 +45,9 @@ void	imParsingThisShit(char **parsed_shit, char *line, List *environ)
 {
 	int		i;
 	char	**fd;
+	int count;
 
+	count = 0;
 	i = 0;
 	while(parsed_shit[i] != NULL)
 	{
@@ -64,6 +67,7 @@ void	imParsingThisShit(char **parsed_shit, char *line, List *environ)
 		}
 		else if(ft_strrchr(line, '<') != NULL)
 		{
+			// parsed_shit = split_input(line, " <", &count);
 			parsed_shit = parse(parsed_shit, line, '<');
 			fd = ft_split(parsed_shit[1], ' ');
 			ft_re_in(parsed_shit, fd, environ);

@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:05:05 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/20 16:19:44 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/25 13:09:36 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,54 +184,54 @@ char **split_string(char *string, char *separators, int *count)
 	free(strings);
 }
 
-// void	exec_cmd(char **split, char **split_line)
-// {
-// 	pid_t	pid = 0;
-// 	int		status = 0;
-
-// 	pid = fork();
-// 	if (pid == -1)
-// 		perror(GREEN"fork"RESET);
-// 	else if (pid > 0)
-// 	{
-// 		waitpid(pid, &status, 0);
-// 		kill(pid, SIGTERM);
-// 	}
-// 	else
-// 	{
-// 		execve(split[0], split_line, NULL);
-// 		exit(EXIT_FAILURE);
-// 	}
-// }
-
-
-void	exec_cmd(char **split, char **split_line, int count_fork)
+void	exec_cmd(char **split, char **split_line)
 {
 	pid_t	pid = 0;
 	int		status = 0;
-	int i;
 
-	i = 0;
-
-	while(split[i] != NULL)
+	pid = fork();
+	if (pid == -1)
+		perror(GREEN"fork"RESET);
+	else if (pid > 0)
 	{
-		pid = fork();
-		if (pid == -1)
-			perror(GREEN"fork"RESET);
-		else if (pid > 0)
-		{
-			waitpid(pid, &status, 0);
-			kill(pid, SIGTERM);
-		}
-		else
-		{
-			execve(split[i], split_line, NULL);
-			exit(EXIT_FAILURE);
-		}
-		i++;
-		count_fork--;
+		waitpid(pid, &status, 0);
+		kill(pid, SIGTERM);
+	}
+	else
+	{
+		execve(split[0], split_line, NULL);
+		exit(EXIT_FAILURE);
 	}
 }
+
+
+// void	exec_cmd(char **split, char **split_line, int count_fork)
+// {
+// 	pid_t	pid = 0;
+// 	int		status = 0;
+// 	int i;
+
+// 	i = 0;
+
+// 	while(split[i] != NULL)
+// 	{
+// 		pid = fork();
+// 		if (pid == -1)
+// 			perror(GREEN"fork"RESET);
+// 		else if (pid > 0)
+// 		{
+// 			waitpid(pid, &status, 0);
+// 			kill(pid, SIGTERM);
+// 		}
+// 		else
+// 		{
+// 			execve(split[i], split_line, NULL);
+// 			exit(EXIT_FAILURE);
+// 		}
+// 		i++;
+// 		count_fork--;
+// 	}
+// }
 
 void	exec_com(char **sp, char **sl, int *count)
 {
@@ -250,10 +250,9 @@ void	exec_com(char **sp, char **sl, int *count)
 			i++;
 			j++;
 		}
-		printf("%s\n", buff);
 		path_bin = buff;
 		sl[2] = NULL;//a definir une place
-		exec_cmd(&path_bin, &sl[0], count_fork);
+		exec_cmd(&path_bin, &sl[0]/*, count_fork*/);
 		free(buff);
 }
 
@@ -276,7 +275,7 @@ void	exec_bin_ls(char **sp, char **sl, int *count)
 		}
 		path_bin_ls = buff;
 		sl[2] = NULL;
-		exec_cmd(&path_bin_ls, &sl[1], count_fork);
+		exec_cmd(&path_bin_ls, &sl[1]/*, count_fork*/);
 		free(buff);
 }
 

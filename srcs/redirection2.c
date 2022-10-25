@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:29:59 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/24 16:53:57 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/25 13:16:42 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	ft_re_out(char **arg, char **fich, List *environ)
 	if (child1.pid == 0)
 	{
 		dup2(fd, 1);
-		check_exec(environ, arg[0]);
+		check_input(arg[0], environ);
+		exit(EXIT_FAILURE);
 	}
 	waitpid(child1.pid, NULL, 0);
 	close(fd);
@@ -40,18 +41,14 @@ void	ft_re_in(char **arg, char **fich, List *environ)
 	t_tube	child1;
 
 	fd = open(fich[0], O_RDWR);
-	if (fd == -1)
-		printf("no such file or directory:%s\n", arg[1]);
-	else
+	child1.pid = fork();
+	if (child1.pid == 0)
 	{
-		child1.pid = fork();
-		if (child1.pid == 0)
-		{
-			dup2(fd, 0);
-			check_exec(environ, arg[0]);
-		}
-		waitpid(child1.pid, NULL, 0);
+		dup2(fd, 0);
+		check_exec(environ, arg[0]);
+		exit(EXIT_FAILURE);
 	}
+	waitpid(child1.pid, NULL, 0);
 	close(fd);
 }
 

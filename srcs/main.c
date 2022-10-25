@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:04:41 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/24 17:39:31 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/25 13:19:08 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,11 @@ int		isbuiltin(char *line)
 
 List	*check_input(char *line, List *environ)
 {
-	if(isbuiltin(line) == 1)
+	if((isbuiltin(line) == 1) || (isbuiltin(line) == 0 && isRedirection(line) == 0))
 	{
-		check_exec(environ, line);
-		//check_redirection(line);
+		check_redirection(line, environ);
+		if (isRedirection(line) == 1)
+			check_exec(environ, line);
 	}
 	else
 	{
@@ -74,13 +75,7 @@ int		main(int argc, char **argv, char **envp)
 		if (*line != '\0')
 		{
 			check_exit(line, "exit");
-			if(isRedirection(line) == 1)
-				parsed_input = parse(parsed_input, line, '|');
-			else
-				parsed_input = parse(parsed_input, line, '|');
-
-
-
+			parsed_input = parse(parsed_input, line, '|');
 			if (check_path(environ, line) == 0)
 			{
 				check_spe_char(line);

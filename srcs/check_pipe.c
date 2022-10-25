@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 09:20:59 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/25 10:36:03 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/25 12:32:17 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ char	**parse_multiple(char **L, char *line, char *c)
 		line2 = ft_strcpylen(line2, " ");
 		line2 = ft_strcpylen(line2, c);
 	}
-
 	while(L[i] != NULL)
 	{
 		if (L[i + 1] == NULL && line2 != NULL)

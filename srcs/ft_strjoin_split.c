@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 10:51:42 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/24 17:37:00 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/25 12:23:22 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,6 @@ char	**ft_split(char const *s, char c)
 		else
 			++s;
 	}
-	str[i] = 0;
+	str[i] = NULL;
 	return (str);
 }
