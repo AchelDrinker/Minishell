@@ -3,4 +3,4 @@
 Il nous manque :
 
 - pipe
-- redirection
+- redirection << et >>
