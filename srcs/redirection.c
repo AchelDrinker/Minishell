@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 13:52:00 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/25 13:17:18 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/26 16:52:45 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 void	check_redirection(char *line, List *environ)
 {
-	char **parsed_shit;
+	char	**parsed_shit;
 
 	if (isRedirection(line) == 1)
 		return ;
 	else
 	{
-
 		parsed_shit = malloc(sizeof(line));
 		parsed_shit[0] = line;
 		imParsingThisShit(parsed_shit, line, environ);
@@ -45,7 +44,7 @@ void	imParsingThisShit(char **parsed_shit, char *line, List *environ)
 {
 	int		i;
 	char	**fd;
-	int count;
+	int		count;
 
 	count = 0;
 	i = 0;
@@ -53,21 +52,20 @@ void	imParsingThisShit(char **parsed_shit, char *line, List *environ)
 	{
 		if(ft_strstr(line, "<<") != 0)
 		{
-			parsed_shit = parse_multiple(parsed_shit, line, "<<");
+			parsed_shit = split_input(line, "<", &count);
 			fd = ft_split(parsed_shit[1], ' ');
-			ft_redi_delimiteur(parsed_shit, fd[0], 0, 0);
+			ft_redi_delimiteur(parsed_shit, fd[0], 0, 0, environ, fd);
 			break;
 		}
 		else if(ft_strstr(line, ">>") != 0)
 		{
-			parsed_shit = parse_multiple(parsed_shit, line, ">>");
+			parsed_shit = split_input(line, ">", &count);
 			fd = ft_split(parsed_shit[1], ' ');
-			ft_re_app(parsed_shit, fd, environ);
+			ft_re_app(parsed_shit[0], fd, environ);
 			break;
 		}
 		else if(ft_strrchr(line, '<') != NULL)
 		{
-			// parsed_shit = split_input(line, " <", &count);
 			parsed_shit = parse(parsed_shit, line, '<');
 			fd = ft_split(parsed_shit[1], ' ');
 			ft_re_in(parsed_shit, fd, environ);

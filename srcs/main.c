@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:04:41 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/25 13:19:08 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/26 16:58:31 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 int		isbuiltin(char *line)
 {
-	if(strncmp(line, "cd ", 3) == 0)
+	if(strncmp(line, "cd ", 2) == 0)
 		return(0);
-	else if(strncmp(line, "export ", 7) == 0)
+	else if(strncmp(line, "export ", 6) == 0)
 		return(0);
-	else if(strncmp(line, "unset ", 6) == 0)
+	else if(strncmp(line, "unset ", 5) == 0)
 		return(0);
-	else if(strncmp(line, "echo ", 5) == 0)
+	else if(strncmp(line, "echo ", 4) == 0)
 		return(0);
-	else if(strncmp(line, "pwd ", 4) == 0)
+	else if(strncmp(line, "pwd ", 3) == 0)
 		return(0);
-	else if(strncmp(line, "env ", 4) == 0)
+	else if(strncmp(line, "env ", 3) == 0)
 		return(0);
 	else
 		return(1);
@@ -57,10 +57,12 @@ int		main(int argc, char **argv, char **envp)
 	char *line;
 	(void)argc;
 	(void)argv;
+	int count;
 
 	List *environ;
 	char **parsed_input;
 	int i;
+	count = 0;
 
 	environ = emptyList();
 	environ = copyEnv(environ, envp);

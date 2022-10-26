@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 09:20:59 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/25 12:32:17 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/26 15:26:54 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	check_pipe(char *line, List *environ)
 		check_pipe2(line, environ, 0);
 }*/
 
-
 char	**parse(char **L, char *line, char c)
 {
 	int i;
@@ -85,38 +84,10 @@ char	**parse(char **L, char *line, char c)
 	L = ft_split(line, c);
 	while(L[i] != NULL)
 	{
-		if (L[i][0] == c)
+		if (L[i][0] == ' ')
 			L[i] = ft_strcpylen(L[i], " ");
 		if(L[i][ft_strlen(L[i]) - 1] == ' ')
 			L[i][ft_strlen(L[i]) - 1] = '\0';
-		i++;
-	}
-	return(L);
-}
-
-char	**parse_multiple(char **L, char *line, char *c)
-{
-	int i;
-	int ii;
-	char *line2;
-
-	i = 0;
-	ii = 0;
-	line2 = NULL;
-	if (ft_strstr(line, c) != 0)
-	{
-		line2 = ft_strstr(line, c);
-		line2 = ft_strcpylen(line2, " ");
-		line2 = ft_strcpylen(line2, c);
-	}
-	while(L[i] != NULL)
-	{
-		if (L[i + 1] == NULL && line2 != NULL)
-		{
-			L[i + 1] = line2;
-			ii = (ft_strlen(L[i]) - ft_strlen(line2)) - 2;
-			L[i][ii] = '\0';
-		}
 		i++;
 	}
 	return(L);

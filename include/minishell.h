@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 10:09:59 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/25 11:30:51 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/26 16:53:48 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,12 +117,13 @@ int		isbuiltin(char *);
 char	**parse_multiple(char **, char *, char *);
 int		isRedirection(char *);
 void	imParsingThisShit(char **, char *, List *);
-int		ft_check_corresp_toutsimple(char *, char *);
+int		ft_check_corresp_word(char *, char *);
 int		ft_check_corresp(char *, char *);
-void	ft_redi_delimiteur(char **, char *, int , int );
-void	ft_re_app(char **, char **, List *);
+void	ft_redi_delimiteur(char **, char *, int , int , List *, char **);
+void	ft_re_app(char *, char **, List *);
 void	ft_re_in(char **, char **, List *);
 void	ft_re_out(char **, char **, List *);
 void	check_redirection(char *, List *);
+char	*ft_strjoin(char const *, char const *);
 
 #endif

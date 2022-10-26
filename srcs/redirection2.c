@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:29:59 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/25 13:16:42 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/26 16:52:40 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_re_in(char **arg, char **fich, List *environ)
 	close(fd);
 }
 
-void	ft_re_app(char **arg, char **fich, List *environ)
+void	ft_re_app(char *arg, char **fich, List *environ)
 {
 	int	fd;
 	t_tube	child1;
@@ -68,13 +68,14 @@ void	ft_re_app(char **arg, char **fich, List *environ)
 	if (child1.pid == 0)
 	{
 		dup2(fd, 1);
-		check_exec(environ, arg[0]);
+		check_input(arg, environ);
+		exit(EXIT_FAILURE);
 	}
 	waitpid(child1.pid, NULL, 0);
 	close(fd);
 }
 
-int	ft_check_corresp_toutsimple(char *s1, char *s2)
+int	ft_check_corresp_word(char *s1, char *s2)
 {
 	int	i;
 
@@ -115,26 +116,35 @@ int	ft_check_corresp(char *s1, char *s2)
 	return (0);
 }
 
-void	ft_redi_delimiteur(char **arg, char *word, int i, int j)
+void	ft_redi_delimiteur(char **arg, char *word, int i, int j, List *environ, char **fd)
 {
 	char	**line;
+	char	*line2;
+	char	**arg2;
+	int		count;
 
+	count = 0;
 	line = malloc(sizeof(char *) * 10000);
+	line2 = malloc(sizeof(char *) * 10000);
 	while (1)
 	{
 		line[i] = readline("heredoc> ");
-		if (!ft_check_corresp_toutsimple(line[i], word))
+		if (!ft_check_corresp_word(line[i], word))
 			break ;
 		i++;
 	}
 	if (!ft_check_corresp(arg[0], "cat"))
 	{
+		arg2 = split_input(arg[1], ">", &count);
+		fd = ft_split(arg2[1], ' ');
 		while (j < i)
 		{
-			printf("%s\n", line[j]);
+			line2 = ft_strjoin("echo ", line[j]);
+			ft_re_app(line2, fd, environ);
+
 			j++;
 		}
 	}
-	free (line);
+	free(line);
+	free(line2);
 }
-
