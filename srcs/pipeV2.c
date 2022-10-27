@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 16:41:56 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/27 17:43:59 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/27 18:36:59 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,13 @@
 
 int pipeCreation(int countfork, char **parsed_input, List *environ)
 {
-	int i;
 	int fd[2];
 	pid_t pid;
 	pid_t pid2;
-	int status;
 
-	i = 0;
-	while(countfork >= 0)
-	{
+
+	// while(countfork >= 0)
+	// {
 		if (pipe(fd) == -1)
 		{
 			printf("Pipe Error");
@@ -39,13 +37,13 @@ int pipeCreation(int countfork, char **parsed_input, List *environ)
 		//on est dans le fils1
 			close(fd[1]);               // on ferme le write
 			dup2(fd[0], 0);             // on redirige l'entrée sur fd[0]
+			close(fd[1]);              //on ferme le read
 			check_exec(environ, parsed_input[countfork]);  // on lance le processus
-			close(fd[0]);              //on ferme le read
-			printf("Error child1");
-			return (1);
+			exit(EXIT_FAILURE);
 		}
-		else
-		{
+
+
+
 		//on est dans le parent1
 			if ((pid2 = fork()) < 0)
 			{        //fork pour ne pas sortir du minishell
@@ -57,18 +55,39 @@ int pipeCreation(int countfork, char **parsed_input, List *environ)
 			// on est dans le fils2
 				close(fd[0]);               //on ferme le read
 				dup2(fd[1], 1);             //on redirige la sortie sur fd[1]
+				close(fd[0]);                  // on ferme le write
 				check_exec(environ, parsed_input[countfork - 1]);  //on lance le processus
-				close(fd[1]);                  // on ferme le write
-				printf("Error child2");
-				return (1);
+				exit(EXIT_FAILURE);
 			}
-			else
-			{
-			//on est dans le parent2
-				while (wait(&status) != pid2);
-			}
-		}
-		countfork--;
-	}
+			close(fd[1]);                  // on ferme le write
+			close(fd[0]);                  // on ferme le read
+			waitpid(pid, NULL, 0);
+			waitpid(pid2, NULL, 0);
+			// else
+			// {
+			// //on est dans le parent2
+			// 	while (wait(&status) != pid2);
+			// }
+
+	// 	countfork--;
+	// }
 	return (0);
+}
+
+
+char	**parse(char **L, char *line, char c)
+{
+	int i;
+
+	i = 0;
+	L = ft_split(line, c);
+	while(L[i] != NULL)
+	{
+		if (L[i][0] == ' ')
+			L[i] = ft_strcpylen(L[i], " ");
+		if(L[i][ft_strlen(L[i]) - 1] == ' ')
+			L[i][ft_strlen(L[i]) - 1] = '\0';
+		i++;
+	}
+	return(L);
 }

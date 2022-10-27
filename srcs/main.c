@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:04:41 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/27 17:00:56 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/27 18:35:22 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ int		main(int argc, char **argv, char **envp)
 				{
 					if (countfork(line) > 0)
 					{
-						printf("%d\n", countfork(line));
 						pipeCreation(countfork(line), parsed_input, environ);
 						break;
 					}
