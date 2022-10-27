@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 10:09:59 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/26 16:53:48 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/27 16:58:54 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,6 @@ void	ft_re_in(char **, char **, List *);
 void	ft_re_out(char **, char **, List *);
 void	check_redirection(char *, List *);
 char	*ft_strjoin(char const *, char const *);
+int		pipeCreation(int, char **, List *);
 
 #endif
