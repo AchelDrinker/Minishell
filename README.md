@@ -2,4 +2,5 @@
 
 Il nous manque :
 
-- pipe
+- norme
+- leaks
