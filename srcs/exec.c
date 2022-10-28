@@ -6,16 +6,18 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:05:05 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/28 09:32:07 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/28 13:51:33 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// static int count_fork = 0;
-
 void	check_exec(List *environ, char *line)
 {
+	char *line2;
+	line2 = "/bin/ls";
+	if(strcmp(line, line2) == 0)
+		line = " ls";
 	char	*path;
 	int		count_strings = 0;
 	int		count_s = 0;
@@ -70,11 +72,7 @@ char **split_input(char *string, char *separators, int *count)
 		while(i < len)
 		{
 			if(strchr(separators, string[i]) == NULL)
-			{
-				// if (string[i] == '|')
-				// 	count_fork++;
 				break;
-			}
 			i++;
 		}
 		//keep track of wich character of the substring are we at
@@ -93,7 +91,6 @@ char **split_input(char *string, char *separators, int *count)
 			buffer[j] = '\0';
 			//to store the string in buffer we need space for the amout of character in the buffer string + '\0' * the amout of space to store the character
 			//need to add the char *line to replace the "ls"
-			//strcat(buffer, "/");
 			int to_allocate = sizeof(char) * (strlen(buffer) + 1);
 			//malloc will allocate enouth space and return a pointer to a block of memory
 

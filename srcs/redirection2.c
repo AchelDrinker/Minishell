@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:29:59 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/26 16:52:40 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/28 14:27:03 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,11 @@ void	ft_re_out(char **arg, char **fich, List *environ)
 	int	fd;
 	t_tube	child1;
 
-	fd = open(fich[0], O_RDWR);
+	fd = open(fich[0], O_RDWR | O_CREAT);
 	if (fd == -1)
 	{
-		fd = open(fich[0], O_RDWR | O_CREAT);
-		if (fd == -1)
-			printf("error\n");
+			ft_putstr_fd("error\n", 2);
+			return;
 	}
 	child1.pid = fork();
 	if (child1.pid == 0)

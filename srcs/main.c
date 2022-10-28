@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:04:41 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/28 13:18:05 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/28 13:42:57 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ int		main(int argc, char **argv, char **envp)
 				check_spe_char(line);
 				while(parsed_input[i] != NULL)
 				{
-
 					if (countfork(line) > 0)
 					{
 						if (countfork(line) == 1)
