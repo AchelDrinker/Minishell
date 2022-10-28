@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:04:41 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/26 16:58:31 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/28 13:18:05 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,30 @@ List	*check_input(char *line, List *environ)
 	return(environ);
 }
 
+int		countfork(char *line)
+{
+	int i;
+	int countquotes;
+	int countdoublequotes;
+	int countfork;
+
+	countfork = 0;
+	countquotes = 0;
+	countdoublequotes = 0;
+	i = 0;
+	while(line[i] != '\0')
+	{
+		if (line[i] == 34)
+			countquotes += 1;
+		else if (line[i] == 39)
+			countdoublequotes += 1;
+		else if (line[i] == '|' && countdoublequotes % 2 == 0 && countquotes % 2 == 0)
+			countfork += 1;
+		i++;
+	}
+	return(countfork);
+}
+
 int		main(int argc, char **argv, char **envp)
 {
 	char *line;
@@ -83,8 +107,30 @@ int		main(int argc, char **argv, char **envp)
 				check_spe_char(line);
 				while(parsed_input[i] != NULL)
 				{
-					environ = check_input(parsed_input[i], environ);
-					i++;
+
+					if (countfork(line) > 0)
+					{
+						if (countfork(line) == 1)
+						{
+							pipeCreation(countfork(line), parsed_input, environ);
+							break;
+						}
+						else if (countfork(line) == 2)
+						{
+							pipeCreation2(parsed_input, environ);
+							break;
+						}
+						else
+						{
+							ft_putstr_fd(RED"Eh grand, force pas avec les pipes ou on te brise les genoux.\n"RESET, 2);
+							break;
+						}
+					}
+					else
+					{
+						environ = check_input(parsed_input[i], environ);
+						i++;
+					}
 				}
 			}
 			i = 0;
