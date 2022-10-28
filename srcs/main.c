@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:04:41 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/27 18:35:22 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/28 13:18:05 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,24 @@ int		main(int argc, char **argv, char **envp)
 				check_spe_char(line);
 				while(parsed_input[i] != NULL)
 				{
+
 					if (countfork(line) > 0)
 					{
-						pipeCreation(countfork(line), parsed_input, environ);
-						break;
+						if (countfork(line) == 1)
+						{
+							pipeCreation(countfork(line), parsed_input, environ);
+							break;
+						}
+						else if (countfork(line) == 2)
+						{
+							pipeCreation2(parsed_input, environ);
+							break;
+						}
+						else
+						{
+							ft_putstr_fd(RED"Eh grand, force pas avec les pipes ou on te brise les genoux.\n"RESET, 2);
+							break;
+						}
 					}
 					else
 					{

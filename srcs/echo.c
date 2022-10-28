@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 13:33:02 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/12 19:32:30 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/28 13:28:32 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,16 @@ List	*check_echo(char *line, char *str, char *str2, List *environ)
 			status = 0;
 			if(line[i] == '$' && line[i + 1] == '?')
 				return(environ);
-			ft_echo(line, i, environ);
-			return(environ);
+			else if(line[i] == 34 && line[i + 1] == 36 && line[i + 2] == 'U' && line[i + 3] == 'S' && line[i + 4] == 'E' && line[i + 5] == 'R' && line[i + 6] == 34)
+			{
+				ft_echo("echo $USER", i, environ);
+				return(environ);
+			}
+			else
+			{
+				ft_echo(line, i, environ);
+				return(environ);
+			}
 		}
 	}
 	else if (i == 7)
