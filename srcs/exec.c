@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:05:05 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/27 17:17:47 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/28 09:32:07 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,7 @@ void	check_exec(List *environ, char *line)
 	path = getAt(environ, find_env_pos(environ, "PATH="));
 	char	**split_strings = split_string(path, ":", &count_strings);
 	char	**split_line = split_input(line, " /", &count_s);
-
-	if(ft_strcmp(line, "/bin/ls") == 0)
-		exec_bin_ls(split_strings, split_line, &count_strings);
-	if(ft_strcmp(line, "ls") == 0)
-		exec_com(split_strings, split_line, &count_strings);
-	if(ft_strcmp(line, "ls -la") == 0)
-		exec_com(split_strings, split_line, &count_strings);
-	else if(ft_strncmp(line, "mkdir", 5) == 0)
-		exec_com(split_strings, split_line, &count_strings);
-	else if(ft_strncmp(line, "touch", 5) == 0)
-		exec_com(split_strings, split_line, &count_strings);
-	else if(ft_strncmp(line, "cat", 3) == 0)
-		exec_com(split_strings, split_line, &count_strings);
-	else if (ft_strncmp(line, "grep", 4) == 0)
-		exec_com(split_strings, split_line, &count_strings);
-	else if(ft_strncmp(line, "rm", 2) == 0)
-		exec_com(split_strings, split_line, &count_strings);
-	else if(ft_strncmp(line, "wc", 2) == 0)
-		exec_com(split_strings, split_line, &count_strings);
+	exec_com(split_strings, split_line, count_strings);
 }
 
 char **split_input(char *string, char *separators, int *count)
@@ -181,7 +163,7 @@ char **split_string(char *string, char *separators, int *count)
 		}
 	}
 	return strings;
-	free(strings);
+	free(strings); // Ce code n'est jamais exec
 }
 
 void	exec_cmd(char **split, char **split_line)
@@ -204,32 +186,39 @@ void	exec_cmd(char **split, char **split_line)
 	}
 }
 
-void	exec_com(char **sp, char **sl, int *count)
+void	exec_com(char **sp, char **sl, int count)
 {
-	int *i;
+	int i;
 	i = 0;
 	int j;
 	j = 0;
 	char *buff;
 	char *path_bin;
+
 	while(i < count)
 		{
-			buff = strcat(sp[j], "/");
-			strcat(buff, sl[0]);
+			// char buf[1000];
+			char *tmp;
+			tmp = ft_strjoin(sp[j], "/");
+			buff = ft_strjoin(tmp, sl[0]);
+			free(tmp);
+			tmp = NULL;
 			if (access(buff, F_OK) == 0)
+			{
+				// printf("buff = %s\n", buf);
+				path_bin = buff;
+				sl[2] = NULL;//a definir une place
+				exec_cmd(&path_bin, &sl[0]/*, count_fork*/);
 				break;
+			}
 			i++;
 			j++;
 		}
-		path_bin = buff;
-		sl[2] = NULL;//a definir une place
-		exec_cmd(&path_bin, &sl[0]/*, count_fork*/);
-		free(buff);
 }
 
-void	exec_bin_ls(char **sp, char **sl, int *count)
+void	exec_bin_ls(char **sp, char **sl, int count)
 {
-		int *i;
+		int i;
 		i = 0;
 		int j;
 		j = 0;
@@ -249,4 +238,3 @@ void	exec_bin_ls(char **sp, char **sl, int *count)
 		exec_cmd(&path_bin_ls, &sl[1]/*, count_fork*/);
 		free(buff);
 }
-

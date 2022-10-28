@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 10:09:59 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/27 16:58:54 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/28 09:31:16 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,8 @@ char	*ft_substr(char const *, unsigned int, size_t);
 char	**split_string(char *, char *, int *);
 char	**split_input(char *, char *, int *);
 void	exec_cmd(char **, char **/*, int*/);
-void	exec_com(char **, char **, int *);
-void	exec_bin_ls(char **, char **, int *);
+// void	exec_com(char **, char **, int *);
+// void	exec_bin_ls(char **, char **, int *);
 void	check_exec(List *, char *);
 void	ft_bzero(void *, size_t);
 void	*ft_memset(void *, int, size_t);
@@ -126,5 +126,7 @@ void	ft_re_out(char **, char **, List *);
 void	check_redirection(char *, List *);
 char	*ft_strjoin(char const *, char const *);
 int		pipeCreation(int, char **, List *);
+void	exec_com(char **, char **, int);
+void	exec_bin_ls(char **, char **, int);
 
 #endif
