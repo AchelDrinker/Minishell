@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:04:41 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/28 13:42:57 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/28 15:14:36 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ List	*check_input(char *line, List *environ)
 		check_env(line, "env", environ);
 		environ = check_export(line, "export", environ);
 		environ = check_unset(line, "unset", environ);
-		environ = check_cd(line, "cd ..", environ);
+		environ = check_cd(line, "cd ..", environ, 0);
 	}
 	return(environ);
 }

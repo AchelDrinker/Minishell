@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 12:00:07 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/20 15:40:55 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/28 17:03:29 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,19 @@ void	ft_error_path(char *line)
 
 int	check_path(List *environ, char *line)
 {
-	List *prec;
+	List	*prec;
 
 	prec = environ;
-	while (ft_strnstr(prec, "PATH", ft_strlen("PATH")) == 0 && prec->next != NULL)
+	while (ft_strnstr(prec, "PATH", ft_strlen("PATH")) == 0
+		&& prec->next != NULL)
 		prec = prec->next;
-	if(prec->next == NULL)
+	if (prec->next == NULL)
 	{
 		ft_error_path(line);
-		return(1);
+		return (1);
 	}
 	else
-		return(0);
+		return (0);
 }
 
 void	ft_error_echo(char *line)
@@ -45,37 +46,37 @@ void	ft_error_echo(char *line)
 	ft_putstr_fd(line, 2);
 }
 
-void check_exit(char *line, char *s1)
+void	check_exit(char *line, char *s1)
 {
-	char s2 [] = "'exit'";
+	char	*s2;
 
-	if(ft_checker_exit(line) > 0)
+	s2 = "'exit'";
+	if (ft_checker_exit(line) > 0)
 	{
 		status = 255;
 		error_fun();
 		ft_putstr_fd("exit : command not found\n", 2);
 	}
-	else if(ft_strcmp(line, s1) == 0)
+	else if (ft_strcmp(line, s1) == 0)
 		exit(0);
-	else if(ft_strcmp(line, s2) == 0)
+	else if (ft_strcmp(line, s2) == 0)
 		exit(0);
-	else if(ft_single_quotes(line, s1) == 4)
+	else if (ft_single_quotes(line, s1) == 4)
 		exit(0);
 }
 
-int ft_checker_exit(char *line)
+int	ft_checker_exit(char *line)
 {
-	int i;
-	int count;
-	char *substr;
-
+	int		i;
+	int		count;
+	char	*substr;
 
 	count = 0;
 	i = 0;
 	substr = ft_strstr(line, "exit");
 	if (!substr)
-		return(0);
-	while(substr[i] != '\0' && substr[i] != '|')
+		return (0);
+	while (substr[i] != '\0' && substr[i] != '|')
 	{
 		if (substr[i] == ' ')
 			count += 1;

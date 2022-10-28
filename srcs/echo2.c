@@ -6,26 +6,17 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 13:35:49 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/19 17:22:49 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/28 17:00:05 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	echo_env_n(char *line, int i, List *environ)
+char	*givebuff2(char *line, int i, int c)
 {
-	int c;
-	List *buff;
-	List *prec;
-	char *buff2;
-	int ii;
+	char	*buff2;
 
-	c = 0;
-	ii = 0;
-	prec = environ;
-	buff = emptyList();
 	buff2 = malloc(sizeof(line));
-
 	while (line[i] != '\0' && line [i] != ' ')
 	{
 		buff2[c] = line[i];
@@ -33,15 +24,27 @@ int	echo_env_n(char *line, int i, List *environ)
 		i++;
 	}
 	buff2[c] = '\0';
+	return (buff2);
+}
+
+int	echo_env_n(char *line, int i, List *environ, int ii)
+{
+	List	*buff;
+	List	*prec;
+	char	*buff2;
+
+	prec = environ;
+	buff = emptyList();
+	buff2 = givebuff2(line, i, 0);
 	while (ft_strnstr(prec, buff2, ft_strlen(buff2)) == 0 && prec->next != NULL)
 	{
 		prec = prec->next;
 		ii++;
 	}
-	if(prec->next == NULL)
+	if (prec->next == NULL)
 	{
 		free(buff2);
-		return(1);
+		return (1);
 	}
 	else
 	{
@@ -52,36 +55,24 @@ int	echo_env_n(char *line, int i, List *environ)
 	}
 }
 
-int	echo_env(char *line, int i, List *environ)
+int	echo_env(char *line, int i, List *environ, int ii)
 {
-	int c;
-	List *buff;
-	List *prec;
-	char *buff2;
-	int ii;
+	List	*buff;
+	List	*prec;
+	char	*buff2;
 
-	c = 0;
-	ii = 0;
 	prec = environ;
 	buff = emptyList();
-	buff2 = malloc(sizeof(line));
-
-	while (line[i] != '\0' && line [i] != ' ')
-	{
-		buff2[c] = line[i];
-		c++;
-		i++;
-	}
-	buff2[c] = '\0';
+	buff2 = givebuff2(line, i, 0);
 	while (ft_strnstr(prec, buff2, ft_strlen(buff2)) == 0 && prec->next != NULL)
 	{
 		prec = prec->next;
 		ii++;
 	}
-	if(prec->next == NULL)
+	if (prec->next == NULL)
 	{
 		free(buff2);
-		return(1);
+		return (1);
 	}
 	else
 	{

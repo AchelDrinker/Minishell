@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 10:09:59 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/28 12:58:42 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/28 17:00:46 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ size_t	ft_strlen(const char *);
 char	*ft_strncat(List *, List *, int);
 char	*ft_strnstr(List *, const char *, size_t);
 void	ft_putchar_fd(char, int);
-int		echo_env_n(char *, int, List *);
-int		echo_env(char *, int, List *);
+int		echo_env_n(char *, int, List *, int);
+int		echo_env(char *, int, List *, int);
 int		check_echo_env_n(char *, int, List *);
 int		check_echo_env(char *, int, List *);
 void	ft_echo(char *, int, List *);
@@ -90,7 +90,7 @@ void	check_spe_char(char *);
 int		ft_single_quotes(char *, char *);
 void	error_fun(void);
 void	header(void);
-List	*check_cd(char *, char *, List *);
+List	*check_cd(char *, char *, List *, int);
 char	*ft_strcpylen(char *, char *);
 int		ft_strncmp(const char *, const char *, size_t);
 char	*ft_strrchr(const char *, int);
@@ -127,8 +127,9 @@ int		pipeCreation(int, char **, List *);
 int		pipeCreation2(char **, List *);
 void	exec_com(char **, char **, int);
 void	exec_bin_ls(char **, char **, int);
-
-int pipeCreation3(int, char **, List *);
+void	built_in_cd(char *, List *, char *);
+int		check_iii(char *, int , int);
+int		do_count(char *, int , int , int);
 
 
 
