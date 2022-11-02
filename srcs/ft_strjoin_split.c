@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 10:51:42 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/26 15:48:52 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/01 11:06:59 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
 	len = ft_strlen(s1) + ft_strlen(s2);
-	buff = (char *)malloc(sizeof(char) * len);
+	buff = (char *)malloc(sizeof(char *) * 10000);
 	if (buff == NULL)
 		return (NULL);
 	ft_strcpy_join(buff, s1);
@@ -86,37 +86,17 @@ char	**ft_split(char const *s, char c)
 {
 	char	**str;
 	int		z;
-	int		y;
-	size_t	i;
-	size_t	len;
+	int		i;
 
+	i = 0;
 	z = 0;
-	y = 0;
 	if (!s)
 		return (0);
-	i = 0;
 	str = malloc(sizeof(char *) * (ft_splitlen(s, c) + 1));
 	if (!str)
 		return (0);
-	while (*s != '\0')
-	{
-		if (*s != c)
-		{
-			len = 0;
-			while (*s && *s != c && ++len)
-			{
-				if (*s == 34)
-					z += 1;
-				if (*s == 39)
-					y += 1;
-				++s;
-			}
-			if (y % 2 == 0 || z % 2 == 0)
-				str[i++] = ft_substr(s - len, 0, len);
-		}
-		else
-			++s;
-	}
+	i = returni(s, c, str, z);
+	str = returnstr(s, c, str, z);
 	str[i] = NULL;
 	return (str);
 }

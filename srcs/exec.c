@@ -6,171 +6,43 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:05:05 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/28 09:32:07 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:39:39 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// static int count_fork = 0;
-
-void	check_exec(List *environ, char *line)
+void	check_exec(t_List *environ, char *line)
 {
 	char	*path;
-	int		count_strings = 0;
-	int		count_s = 0;
-	path = getAt(environ, find_env_pos(environ, "PATH="));
-	char	**split_strings = split_string(path, ":", &count_strings);
-	char	**split_line = split_input(line, " /", &count_s);
-	exec_com(split_strings, split_line, count_strings);
-}
+	char	**split_strings;
+	char	**split_line;
 
-char **split_input(char *string, char *separators, int *count)
-{
-	//return the lenth of the string PATH
-	int len = strlen(string);
-	//keep track of the number of substrings to create
-	*count = 0;
-
-	int i = 0;
-	while (i < len)
+	path = getat(environ, find_env_pos(environ, "PATH="));
+	split_strings = ft_split_exe(path, ':');
+	split_line = ft_split_exe(line, ' ');
+	if (path != NULL)
 	{
-		//step thru any separator acure first
-		//only to find separator in string if [i] is a character the loop break
-		while(i < len)
-		{
-			if(strchr(separators, string[i]) == NULL)
-				break;
-			i++;
-		}
-		//old_i is the guard for the case that we dont find any separators
-		int old_i = i;
-		//next separtor until the end
-		//stepping the character that are not separators
-		while(i < len)
-		{
-			if(strchr(separators, string[i]) != NULL)
-				break;
-			i++;
-		}
-		//iter the sub string
-		if(i > old_i)
-			*count = *count + 1;
+		g_status = 0;
+		if (ft_strcmp(line, "/bin/ls") == 0)
+			exec_bin_ls(split_strings, split_line);
+		else
+			exec_com(split_strings, split_line, 0, 0);
 	}
-	//allocation : allocating space for *count amount of pointers to strings
-	char **strings = malloc(sizeof(char *) * *count);
-
-	i = 0;
-	char buffer[16384];
-	int string_index = 0;
-	while (i < len)
+	else
 	{
-		//step thru any separator acure first
-		//only to find separator in string if [i] is a character the loop break
-		while(i < len)
-		{
-			if(strchr(separators, string[i]) == NULL)
-			{
-				// if (string[i] == '|')
-				// 	count_fork++;
-				break;
-			}
-			i++;
-		}
-		//keep track of wich character of the substring are we at
-		int j = 0;
-		while(i < len)
-		{
-			if(strchr(separators, string[i]) != NULL)
-				break;
-			//copy each character on this substring into buffer
-			buffer[j] = string[i];
-			i++;
-			j++;
-		}
-		if(j > 0)
-		{
-			buffer[j] = '\0';
-			//to store the string in buffer we need space for the amout of character in the buffer string + '\0' * the amout of space to store the character
-			//need to add the char *line to replace the "ls"
-			//strcat(buffer, "/");
-			int to_allocate = sizeof(char) * (strlen(buffer) + 1);
-			//malloc will allocate enouth space and return a pointer to a block of memory
-
-			//and we gonna have strings at [string_index] store at the adress
-			strings[string_index] = malloc(to_allocate);
-			strcpy(strings[string_index], buffer);
-			string_index++;
-		}
+		g_status = 1;
+		perror("path");
 	}
-	return strings;
-	free(strings);
-}
-
-char **split_string(char *string, char *separators, int *count)
-{
-	int len = strlen(string);
-	*count = 0;
-
-	int i = 0;
-	while (i < len)
-	{
-		while(i < len)
-		{
-			if(strchr(separators, string[i]) == NULL)
-				break;
-			i++;
-		}
-		int old_i = i;
-		while(i < len)
-		{
-			if(strchr(separators, string[i]) != NULL)
-				break;
-			i++;
-		}
-		if(i > old_i)
-			*count = *count + 1;
-	}
-	char **strings = malloc(sizeof(char *) * *count);
-
-	i = 0;
-	char buffer[16384];
-	int string_index = 0;
-	while (i < len)
-	{
-		while(i < len)
-		{
-			if(strchr(separators, string[i]) == NULL)
-				break;
-			i++;
-		}
-		int j = 0;
-		while(i < len)
-		{
-			if(strchr(separators, string[i]) != NULL)
-				break;
-			buffer[j] = string[i];
-			i++;
-			j++;
-		}
-		if(j > 0)
-		{
-			buffer[j] = '\0';
-			int to_allocate = sizeof(char) * (strlen(buffer) + 1);
-			strings[string_index] = malloc(to_allocate);
-			strcpy(strings[string_index], buffer);
-			string_index++;
-		}
-	}
-	return strings;
-	free(strings); // Ce code n'est jamais exec
 }
 
 void	exec_cmd(char **split, char **split_line)
 {
-	pid_t	pid = 0;
-	int		status = 0;
+	pid_t	pid;
+	int		status;
 
+	status = 0;
+	pid = 0;
 	pid = fork();
 	if (pid == -1)
 		perror(GREEN"fork"RESET);
@@ -186,55 +58,58 @@ void	exec_cmd(char **split, char **split_line)
 	}
 }
 
-void	exec_com(char **sp, char **sl, int count)
+void	exec_com(char **sp, char **sl, int i, int j)
 {
-	int i;
-	i = 0;
-	int j;
-	j = 0;
-	char *buff;
-	char *path_bin;
+	char	*buff;
+	char	*path_bin;
+	char	*tmp;
 
-	while(i < count)
+	while (sp != NULL)
+	{
+		tmp = ft_strjoin(sp[j], "/");
+		buff = ft_strjoin(tmp, sl[0]);
+		free(tmp);
+		if (buff == NULL)
 		{
-			// char buf[1000];
-			char *tmp;
-			tmp = ft_strjoin(sp[j], "/");
-			buff = ft_strjoin(tmp, sl[0]);
-			free(tmp);
-			tmp = NULL;
-			if (access(buff, F_OK) == 0)
-			{
-				// printf("buff = %s\n", buf);
-				path_bin = buff;
-				sl[2] = NULL;//a definir une place
-				exec_cmd(&path_bin, &sl[0]/*, count_fork*/);
-				break;
-			}
-			i++;
-			j++;
+			ft_putstr_fd(RED"command not found\n"RESET, 2);
+			g_status = 127;
+			break ;
 		}
+		if (access(buff, F_OK) == 0)
+		{
+			path_bin = buff;
+			sl[2] = NULL;
+			exec_cmd(&path_bin, &sl[0]);
+			break ;
+		}
+		i++;
+		j++;
+	}
 }
 
-void	exec_bin_ls(char **sp, char **sl, int count)
+void	exec_bin_ls(char **sp, char **sl)
 {
-		int i;
-		i = 0;
-		int j;
-		j = 0;
-		char *buff;
-		char *path_bin_ls;
-		while(i < count)
+	int		i;
+	int		j;
+	char	*buff;
+	char	*path_bin_ls;
+	char	*tmp;
+
+	i = 0;
+	j = 0;
+	while (sp != NULL)
+	{
+		tmp = ft_strjoin(sp[j], "/");
+		buff = ft_strjoin(tmp, sl[1]);
+		free(tmp);
+		if (access(buff, F_OK) == 0)
 		{
-			buff = strcat(sp[j], "/");
-			strcat(buff, sl[1]);
-			if (access(buff, F_OK) == 0)
-				break;
-			i++;
-			j++;
+			path_bin_ls = buff;
+			sl[2] = NULL;
+			exec_cmd(&path_bin_ls, &sl[1]);
+			break ;
 		}
-		path_bin_ls = buff;
-		sl[2] = NULL;
-		exec_cmd(&path_bin_ls, &sl[1]/*, count_fork*/);
-		free(buff);
+		i++;
+		j++;
+	}
 }

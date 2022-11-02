@@ -6,43 +6,42 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 10:04:36 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/12 19:07:21 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/31 13:02:13 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static Cell *createCell(char *);
+static t_Cell	*createcell(char *data);
 
 //Create a cell with the data in argument
-static Cell *createCell(char *data)
+static	t_Cell	*createcell(char *data)
 {
-	Cell *cell;
+	t_Cell	*cell;
 
-	cell = malloc(sizeof(Cell));
+	cell = malloc(sizeof(t_Cell));
 	if (!cell)
-		return NULL;
+		return (NULL);
 	cell->data = data;
 	cell->next = NULL;
-	return(cell);
+	return (cell);
 }
 
 // Add a char element to a defined position of a list
-List	*addAt(List *L, char *data, int pos)
+t_List	*addat(t_List *L, char *data, int pos)
 {
-	List *prec;
-	List *cur;
-	int i;
+	t_List	*prec;
+	t_List	*cur;
+	int		i;
+	t_Cell	*cell;
 
 	prec = L;
 	cur = L;
 	i = 0;
-	Cell *cell = createCell(data);
-	if (isEmptyList(L))
-	{
-		return(cell);
-	}
-	if(pos == 0)
+	cell = createcell(data);
+	if (isemptylist(L))
+		return (cell);
+	if (pos == 0)
 	{
 		cell->next = L;
 		return (cell);
@@ -55,18 +54,18 @@ List	*addAt(List *L, char *data, int pos)
 	}
 	prec->next = cell;
 	cell->next = cur;
-	return(L);
+	return (L);
 }
 
 //Edit a char element of the list
-void	setAt(List *L, char *data, int pos)
+void	setat(t_List *L, char *data, int pos)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if(pos > lenList(L))
-		return;
-	while(i < pos)
+	if (pos > lenlist(L))
+		return ;
+	while (i < pos)
 	{
 		i++;
 		L = L->next;
@@ -75,9 +74,9 @@ void	setAt(List *L, char *data, int pos)
 }
 
 //print the char list
-void	printList(List *L)
+void	printlist(t_List *L)
 {
-	while(L)
+	while (L)
 	{
 		printf("%s\n", L->data);
 		L = L->next;
@@ -85,66 +84,25 @@ void	printList(List *L)
 }
 
 //print the char cell in argument
-void	printCell(List *L, int pos, int depart)
+void	printcell(t_List *L, int pos, int depart)
 {
-	int i;
-	int c;
-	char *str;
+	int		i;
+	int		c;
+	char	*str;
 
-	str = malloc(sizeof(Cell));
+	str = malloc(sizeof(t_Cell));
 	c = 0;
 	i = 0;
-	while(i < pos)
+	while (i < pos)
 	{
 		i++;
 		L = L->next;
 	}
-	while(L->data[++depart] != '\0')
+	while (L->data[++depart] != '\0')
 	{
 		str[c] = L->data[depart];
 		c++;
 	}
 	str[c] = '\0';
 	printf("%s\n", str);
-}
-
-void	printCell_n(List *L, int pos, int depart)
-{
-	int i;
-	int c;
-	char *str;
-
-	str = malloc(sizeof(Cell));
-	c = 0;
-	i = 0;
-	while(i < pos)
-	{
-		i++;
-		L = L->next;
-	}
-	while(L->data[++depart] != '\0')
-	{
-		str[c] = L->data[depart];
-		c++;
-	}
-	str[c] = '\0';
-	printf("%s", str);
-}
-
-int		find_env_pos(List *environ, char *str)
-{
-	int i;
-	List *prec;
-
-	prec = environ;
-	i = 0;
-	while ((ft_strnstr(prec, str, ft_strlen(str)) == 0) && prec != NULL)
-	{
-		prec = prec->next;
-		i++;
-	}
-	if (prec == NULL)
-		return(-1);
-	else
-		return(i);
 }

@@ -6,69 +6,68 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 10:04:36 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/12 18:57:38 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:36:40 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 // create a list
-List	*emptyList(void)
+t_List	*emptylist(void)
 {
-	return(NULL);
+	return (NULL);
 }
 
 //check if the list is empty
-int		isEmptyList(List *L)
+int	isemptylist(t_List *L)
 {
-	return(L == NULL);
+	return (L == NULL);
 }
 
 //check and return the lenght of the list
-long	lenList(List *L)
+long	lenlist(t_List *L)
 {
-	long len;
+	long	len;
 
 	len = 0;
-	while(L)
+	while (L)
 	{
 		len++;
 		L = L->next;
 	}
-	return(len);
+	return (len);
 }
 
 //Return the data of an element of the list
-char	*getAt(List *L, int pos)
+char	*getat(t_List *L, int pos)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if(isEmptyList(L))
+	if (isemptylist(L))
 	{
-		status = 1;
-		error_fun();
+		g_status = 1;
 		printf("error : empty list\n");
-		return(NULL);
+		return (NULL);
 	}
-	while(i < pos)
+	while (i < pos)
 	{
 		i++;
 		L = L->next;
 	}
-	return(L->data);
+	return (L->data);
 }
 
 // Copy the environment list in my custom list
-List *copyEnv(List *L, char **env)
+t_List	*copyenv(t_List *L, char **env)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(env[i])
+	while (env[i])
 	{
-		L = addAt(L, env[i], lenList(L));
+		L = addat(L, env[i], lenlist(L));
 		i++;
 	}
-	return(L);
+	return (L);
 }

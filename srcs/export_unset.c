@@ -6,67 +6,72 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 15:54:20 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/12 19:03:07 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:36:25 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-
-
-List *check_export(char *line, char *str, List *environ)
+t_List	*check_export2(char *line, int i, int ii, t_List *environ)
 {
-	int i;
-	int ii;
-	int c;
-	char *line2;
+	int		c;
+	char	*line2;
+
+	c = 0;
+	line2 = malloc(sizeof(t_Cell));
+	i++;
+	while (line[i] != '\0')
+	{
+		if (line[i] == '=')
+			c = 1;
+		line2[ii] = line[i];
+		i++;
+		ii++;
+	}
+	if (c == 0)
+	{
+		line2[ii++] = '=';
+		line2[ii++] = '"';
+		line2[ii++] = '"';
+		line2[ii++] = '\0';
+	}
+	else
+		line2[ii++] = '\0';
+	environ = addat(environ, line2, 1);
+	return (environ);
+}
+
+t_List	*check_export(char *line, char *str, t_List *environ)
+{
+	int		i;
+	int		ii;
 
 	i = 0;
 	ii = 0;
-	c = 0;
 	while (line[i] == str[i] && (line[i] != '\0' || str[i] != '\0'))
 		i++;
 	if (i == 6)
 	{
 		if (line[i + 1] != '\0')
 		{
-			line2 = malloc(sizeof(Cell));
-			i++;
-			while (line[i] != '\0')
-			{
-				if(line[i] == '=')
-					c = 1;
-				line2[ii] = line[i];
-				i++;
-				ii++;
-			}
-			if (c == 0)
-			{
-				line2[ii++] = '=';
-				line2[ii++] = '"';
-				line2[ii++] = '"';
-				line2[ii++] = '\0';
-			}
-			else
-				line2[ii++] = '\0';
-			environ = addAt(environ, line2, 0);
-			return(environ);
+			environ = check_export2(line, i, ii, environ);
+			return (environ);
 		}
 		else
 		{
-			printList(environ);
-			return(environ);
+			printlist(environ);
+			return (environ);
 		}
-		status = 0;
+		g_status = 0;
 	}
 	else
-		return(environ);
+		return (environ);
 }
 
-List *ft_unsetenv(List *environ, char *line)
+t_List	*ft_unsetenv(t_List *environ, char *line)
 {
-	int i;
-	List *prec;
+	int		i;
+	t_List	*prec;
 
 	prec = environ;
 	i = 0;
@@ -75,50 +80,55 @@ List *ft_unsetenv(List *environ, char *line)
 		prec = prec->next;
 		i++;
 	}
-	if(prec->next == NULL)
-		return(environ);
+	if (prec->next == NULL)
+		return (environ);
 	else
 	{
-		environ = freeAt(environ, i);
-		return(environ);
+		environ = freeat(environ, i);
+		return (environ);
 	}
 }
 
-List *check_unset(char *line, char *str, List *environ)
+t_List	check_unset2(char *line, char *line2, int i, t_List *environ)
 {
-	int i;
-	int ii;
-	char *line2;
+	int	ii;
 
-	line2 = malloc(sizeof(Cell));
+	ii = 0;
+	i++;
+	while (line[i] != '\0')
+	{
+		line2[ii] = line[i];
+		i++;
+		ii++;
+	}
+	line2[ii] = '\0';
+	if (ii > 0)
+	{
+		environ = ft_unsetenv(environ, line2);
+		g_status = 0;
+		return (*environ);
+	}
+	else
+	{
+		g_status = 1;
+		ft_putstr_fd(RED"error unset"RESET, 2);
+		return (*environ);
+	}
+}
 
+t_List	*check_unset(char *line, char *str, t_List *environ)
+{
+	int		i;
+	int		ii;
+	char	*line2;
+
+	line2 = malloc(sizeof(t_Cell));
 	i = 0;
 	ii = 0;
 	while (line[i] == str[i] && (line[i] != '\0' || str[i] != '\0'))
 		i++;
 	if (i == 5)
-	{
-		i++;
-		while (line[i] != '\0')
-		{
-			line2[ii] = line[i];
-			i++;
-			ii++;
-		}
-		line2[ii] = '\0';
-		if (ii > 0)
-		{
-			environ = ft_unsetenv(environ, line2);
-			status = 0;
-		}
-		else
-		{
-			status = 1;
-			error_fun();
-			ft_putstr_fd("error unset",2);
-			return(environ);
-		}
-	}
+		check_unset2(line, line2, i, environ);
 	free(line2);
-	return(environ);
+	return (environ);
 }

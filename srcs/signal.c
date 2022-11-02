@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kthierry <kthierry@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:35:55 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/20 13:15:58 by humartin         ###   ########.fr       */
+/*   Updated: 2022/10/28 22:37:12 by kthierry         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	signal_exec(void)
 	signal(SIGQUIT, handle_exec);
 	signal(SIGINT, handle_exec);
 }
-/*---- trap for signal ----*/
+
 void	signal_trap(void)
 {
 	signal(SIGQUIT, SIG_IGN);

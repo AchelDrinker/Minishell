@@ -1,57 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   stack_char2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/04 13:32:03 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/31 12:48:45 by humartin         ###   ########.fr       */
+/*   Created: 2022/10/28 15:36:49 by kthierry          #+#    #+#             */
+/*   Updated: 2022/10/31 13:02:45 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-//free an element of the list
-t_List	*freeat(t_List *L, int pos)
+void	printcell_n(t_List *L, int pos, int depart)
 {
-	t_List	*prec;
-	t_List	*cur;
 	int		i;
+	int		c;
+	char	*str;
 
-	prec = L;
-	cur = L;
+	str = malloc(sizeof(t_Cell));
+	c = 0;
 	i = 0;
-	if (isemptylist(L))
-		return (NULL);
-	if (pos == 0)
-	{
-		L = L->next;
-		free(cur);
-		return (L);
-	}
 	while (i < pos)
 	{
 		i++;
-		prec = cur;
-		cur = cur->next;
+		L = L->next;
 	}
-	prec->next = cur->next;
-	free(cur);
-	return (L);
+	while (L->data[++depart] != '\0')
+	{
+		str[c] = L->data[depart];
+		c++;
+	}
+	str[c] = '\0';
+	printf("%s", str);
 }
 
-//free the list
-t_List	*freelist(t_List *L)
+int	find_env_pos(t_List *environ, char *str)
 {
-	t_List	*tmp;
+	int		i;
+	t_List	*prec;
 
-	tmp = NULL;
-	while (L)
+	prec = environ;
+	i = 0;
+	while ((ft_strnstr(prec, str, ft_strlen(str)) == 0) && prec != NULL)
 	{
-		tmp = L->next;
-		free(L);
-		L = tmp;
+		prec = prec->next;
+		i++;
 	}
-	return (tmp);
+	if (prec == NULL)
+		return (-1);
+	else
+		return (i);
 }

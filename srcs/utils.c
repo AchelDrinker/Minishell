@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 13:36:30 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/05 12:12:45 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:31:58 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-char	*ft_strncat(List *dest, List *src, int nb)
+char	*ft_strncat(t_List *dest, t_List *src, int nb)
 {
 	int	i;
 	int	j;
@@ -43,7 +43,7 @@ char	*ft_strncat(List *dest, List *src, int nb)
 	return (dest->data);
 }
 
-char	*ft_strnstr(List *big, const char *little, size_t len)
+char	*ft_strnstr(t_List *big, const char *little, size_t len)
 {
 	size_t	i;
 	size_t	j;
