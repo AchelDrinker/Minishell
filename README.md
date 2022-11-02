@@ -1,5 +1,7 @@
-# Minishell
+# FLEXSHELL
 
-Il nous manque :
+Definition :
 
-- pipe
+Showing off your valuables in a non-humble way.
+
+Leaks arent an option. Just pleasure.
