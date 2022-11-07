@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 10:09:59 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/02 15:39:46 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/07 16:46:44 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_List	*check_input(char *line, t_List *environ);
 t_List	*check_export(char *line, char *str, t_List *environ);
 t_List	*ft_unsetenv(t_List *environ, char *line);
 t_List	*check_unset(char *line, char *str, t_List *environ);
-int		check_path(t_List *environ, char *line);
+int		check_path(t_List *environ);
 void	ft_error_path(char *line);
 void	ft_putstr_fd(char *str, int fd);
 void	ft_error_echo(char *line);
@@ -121,11 +121,9 @@ void	built_in_cd(char *path, t_List *environ, char *oldpwd);
 int		check_iii(char *line, int i, int iii);
 int		do_count(char *line, int i, int count, int iii);
 char	**ft_split_exe(char const *s, char c);
-void	exec_bin_ls(char **sp, char **sl);
+void	exec_bin_ls(char **sp, char **sl, int i, int j);
 int		county(int y, const char *s);
-int		countz(int z, const char *s);
-int		returni(char const *s, char c, char **str, int z);
-char	**returnstr(char const *s, char c, char **str, int z);
+char	**returnstr(char const *s, char c, char **str);
 t_List	*prompt(char *line, char **parsed_input, t_List *environ, int i);
 int		countfork(char *line);
 void	parsing_this1(char **parsed_shit,

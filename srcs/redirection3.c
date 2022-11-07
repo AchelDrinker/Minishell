@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 23:06:51 by kthierry          #+#    #+#             */
-/*   Updated: 2022/11/02 15:23:32 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/07 12:36:59 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void	ft_while2(int i, char **fd, t_List *environ, char **line)
 	while (j < i)
 	{
 		line2 = ft_strjoin("echo ", line[j]);
-		ft_re_app(line2, fd, environ);
+		if (fd != NULL)
+			ft_re_app(line2, fd, environ);
+		else if (fd == NULL)
+			check_input(line2, environ);
 		j++;
 	}
 	free(line2);

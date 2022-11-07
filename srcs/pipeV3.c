@@ -31,7 +31,7 @@ pid_t	child1_triple(int fd[2][2], char *parsed_input, t_List *environ)
 		close(fd[1][1]);
 		dup2(fd[0][1], 1);
 		close(fd[0][1]);
-		check_exec(environ, parsed_input);
+		check_input(parsed_input, environ);
 		exit(EXIT_FAILURE);
 	}
 	return (pid);
@@ -57,7 +57,7 @@ pid_t	child2_triple(int fd[2][2], char *parsed_input, t_List *environ)
 		dup2(fd[1][1], 1);
 		close(fd[0][0]);
 		close(fd[1][1]);
-		check_exec(environ, parsed_input);
+		check_input(parsed_input, environ);
 		exit(EXIT_FAILURE);
 	}
 	return (pid2);
@@ -82,7 +82,7 @@ pid_t	child3_triple(int fd[2][2], char *parsed_input, t_List *environ)
 		close(fd[1][1]);
 		dup2(fd[1][0], 0);
 		close(fd[1][0]);
-		check_exec(environ, parsed_input);
+		check_input(parsed_input, environ);
 		exit(EXIT_FAILURE);
 	}
 	return (pid3);

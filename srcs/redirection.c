@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 13:52:00 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/02 13:05:13 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/07 14:39:35 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,19 @@ void	check_redirection(char *line, t_List *environ)
 
 int	isredirection(char *line)
 {
-	if (ft_strstr(line, "<<") != 0)
+	if (ft_strstr(line, " << ") != 0)
 		return (0);
-	if (ft_strstr(line, ">>") != 0)
+	else if (ft_strstr(line, " >> ") != 0)
 		return (0);
-	if (ft_strrchr(line, '<') != NULL)
+	else if (ft_strstr(line, " < ") != 0)
 		return (0);
-	if (ft_strrchr(line, '>') != NULL)
+	else if (ft_strstr(line, " > ") != 0)
 		return (0);
 	else
+	{
+		g_status = 258;
 		return (1);
+	}
 }
 
 void	im_parsing_this_shit(char **parsed_shit,

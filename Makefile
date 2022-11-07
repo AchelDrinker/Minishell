@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: humartin <humartin@student.42.fr>          +#+  +:+       +#+         #
+#    By: kthierry <kthierry@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/12 11:51:50 by humartin          #+#    #+#              #
-#    Updated: 2022/11/02 15:23:48 by humartin         ###   ########.fr        #
+#    Updated: 2022/11/07 01:14:58 by kthierry         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC := gcc
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror -g
 LIB := -L/Users/humartin/.brew/opt/readline/lib -lreadline
 LIB_BIS := -I./include -I/Users/humartin/.brew/opt/readline/include
 

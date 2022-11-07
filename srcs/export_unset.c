@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 15:54:20 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/02 15:36:25 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/07 13:56:54 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ t_List	check_unset2(char *line, char *line2, int i, t_List *environ)
 	else
 	{
 		g_status = 1;
-		ft_putstr_fd(RED"error unset"RESET, 2);
+		ft_putstr_fd(RED"error unset\n"RESET, 2);
 		return (*environ);
 	}
 }
@@ -119,12 +119,10 @@ t_List	check_unset2(char *line, char *line2, int i, t_List *environ)
 t_List	*check_unset(char *line, char *str, t_List *environ)
 {
 	int		i;
-	int		ii;
 	char	*line2;
 
 	line2 = malloc(sizeof(t_Cell));
 	i = 0;
-	ii = 0;
 	while (line[i] == str[i] && (line[i] != '\0' || str[i] != '\0'))
 		i++;
 	if (i == 5)

@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 11:12:01 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/02 13:10:00 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/07 13:52:10 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,9 @@ t_List	*prompt2(char *line, char **parsed_input, t_List *environ, int i)
 
 t_List	*prompt_1(char *line, char **parsed_input, t_List *environ, int i)
 {
-	check_exit(line, "exit");
 	parsed_input = parse(parsed_input, line, '|');
-	if (check_path(environ, line) == 0)
-	{
-		check_spe_char(line);
-		prompt2(line, parsed_input, environ, i);
-	}
-	i = 0;
+	check_spe_char(line);
+	prompt2(line, parsed_input, environ, i);
 	return (environ);
 }
 
@@ -56,11 +51,12 @@ t_List	*prompt(char *line, char **parsed_input, t_List *environ, int i)
 {
 	while (1)
 	{
-		line = readline("FlexShell"GREEN"$> "RESET);
+		line = readline("FlexShell$> ");
 		if (!line)
 			break ;
 		add_history(line);
 		signal_trap();
+		check_exit(line, "exit");
 		if (*line != '\0')
 			prompt_1(line, parsed_input, environ, i);
 	}

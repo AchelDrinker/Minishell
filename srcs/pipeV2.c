@@ -29,7 +29,7 @@ pid_t	child1(int *fd, char **parsed_input, t_List *environ, int countfork)
 		close(fd[1]);
 		dup2(fd[0], 0);
 		close(fd[0]);
-		check_exec(environ, parsed_input[countfork]);
+		check_input(parsed_input[countfork], environ);
 		exit(EXIT_FAILURE);
 	}
 	return (pid);
@@ -52,7 +52,7 @@ pid_t	child2(int *fd, char **parsed_input, t_List *environ, int countfork)
 		close(fd[0]);
 		dup2(fd[1], 1);
 		close(fd[1]);
-		check_exec(environ, parsed_input[countfork - 1]);
+		check_input(parsed_input[countfork - 1], environ);
 		exit(EXIT_FAILURE);
 	}
 	return (pid2);

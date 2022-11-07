@@ -6,33 +6,54 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:05:05 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/02 15:39:39 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/07 15:04:49 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	check_exec(t_List *environ, char *line)
+char	*get_the_path(t_List *environ)
 {
 	char	*path;
-	char	**split_strings;
-	char	**split_line;
 
 	path = getat(environ, find_env_pos(environ, "PATH="));
-	split_strings = ft_split_exe(path, ':');
-	split_line = ft_split_exe(line, ' ');
-	if (path != NULL)
+	if (path == NULL)
+		return (NULL);
+	else
+		return (path);
+}
+
+void	check_exec(t_List *environ, char *line)
+{
+	char	**split_strings;
+	char	**split_line;
+	char	**split_bin;
+
+	if (check_path(environ) == 0)
 	{
-		g_status = 0;
-		if (ft_strcmp(line, "/bin/ls") == 0)
-			exec_bin_ls(split_strings, split_line);
+		split_strings = ft_split_exe(get_the_path(environ), ':');
+		split_line = ft_split_exe(line, ' ');
+		if (split_strings != NULL)
+		{
+			g_status = 0;
+			if (ft_strcmp(line, "/bin/ls") == 0)
+			{
+				split_bin = ft_split_exe(line, '/');
+				exec_bin_ls(split_strings, split_bin, 0, 0);
+			}
+			else
+				exec_com(split_strings, split_line, 0, 0);
+		}
 		else
-			exec_com(split_strings, split_line, 0, 0);
+		{
+			g_status = 1;
+			perror("path");
+		}
 	}
 	else
 	{
-		g_status = 1;
-		perror("path");
+		ft_error_path(line);
+		g_status = 127;
 	}
 }
 
@@ -87,26 +108,26 @@ void	exec_com(char **sp, char **sl, int i, int j)
 	}
 }
 
-void	exec_bin_ls(char **sp, char **sl)
+void	exec_bin_ls(char **sp, char **sl, int i, int j)
 {
-	int		i;
-	int		j;
 	char	*buff;
-	char	*path_bin_ls;
 	char	*tmp;
 
-	i = 0;
-	j = 0;
 	while (sp != NULL)
 	{
 		tmp = ft_strjoin(sp[j], "/");
 		buff = ft_strjoin(tmp, sl[1]);
 		free(tmp);
+		if (buff == NULL)
+		{
+			ft_putstr_fd(RED"command not found\n"RESET, 2);
+			g_status = 127;
+			break ;
+		}
 		if (access(buff, F_OK) == 0)
 		{
-			path_bin_ls = buff;
 			sl[2] = NULL;
-			exec_cmd(&path_bin_ls, &sl[1]);
+			exec_cmd(&buff, &sl[1]);
 			break ;
 		}
 		i++;

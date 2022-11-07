@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:04:41 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/02 12:52:56 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/07 15:05:06 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,15 @@ t_List	*check_input(char *line, t_List *environ)
 	}
 	else
 	{
+		if (check_path(environ) == 0)
+		{
+			check_env(line, "env", environ);
+		}
+		else if (check_path(environ) == 1 && ft_strstr(line, "env") != NULL)
+			ft_error_path(line);
 		check_status(line, "echo $?");
 		environ = check_echo(line, "echo", " -n", environ);
 		check_pwd(line, "pwd", environ);
-		check_env(line, "env", environ);
 		environ = check_export(line, "export", environ);
 		environ = check_unset(line, "unset", environ);
 		environ = check_cd(line, "cd ..", environ, 0);
@@ -93,9 +98,10 @@ int	main(int argc, char **argv, char **envp)
 	i = 0;
 	header();
 	signal_trap();
-	prompt(line, parsed_input, environ, i);
+	environ = prompt(line, parsed_input, environ, i);
 	environ = freelist(environ);
 	g_status = 0;
 	free(line);
+	rl_clear_history ();
 	return (0);
 }

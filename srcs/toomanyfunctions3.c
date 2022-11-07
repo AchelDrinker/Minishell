@@ -6,29 +6,22 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 11:07:18 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/02 11:45:30 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/07 16:47:40 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	county(int y, const char *s)
+int	county(int quote, const char *s)
 {
-	if (*s == 39)
-		return (y += 1);
-	else
-		return (y);
+	if (*s == 34 && quote >= 0)
+		quote += 1;
+	if (*s == 39 && quote <= 0)
+		quote -= 1;
+	return(quote);
 }
 
-int	countz(int z, const char *s)
-{
-	if (*s == 34)
-		return (z += 1);
-	else
-		return (z);
-}
-
-int	returni(char const *s, char c, char **str, int z)
+char	**returnstr(char const *s, char c, char **str)
 {
 	size_t	len;
 	int		i;
@@ -43,44 +36,16 @@ int	returni(char const *s, char c, char **str, int z)
 			len = 0;
 			while (*s && *s != c && ++len)
 			{
-				z = countz(z, s);
-				y = county(y, s);
+				y = county(y, s); //ici ca ne decompte pas les quotes et quand on print, ca affiche 3 caracteres non imprimables
 				++s;
 			}
-			if (y % 2 == 0 || z % 2 == 0)
+			if (y % 2 == 0)
 				str[i++] = ft_substr(s - len, 0, len);
 		}
 		else
 			++s;
 	}
-	return (i);
-}
-
-char	**returnstr(char const *s, char c, char **str, int z)
-{
-	size_t	len;
-	int		i;
-	int		y;
-
-	i = 0;
-	y = 0;
-	while (*s != '\0')
-	{
-		if (*s != c)
-		{
-			len = 0;
-			while (*s && *s != c && ++len)
-			{
-				z = countz(z, s);
-				y = county(y, s);
-				++s;
-			}
-			if (y % 2 == 0 || z % 2 == 0)
-				str[i++] = ft_substr(s - len, 0, len);
-		}
-		else
-			++s;
-	}
+	str[i++] = NULL;
 	return (str);
 }
 
