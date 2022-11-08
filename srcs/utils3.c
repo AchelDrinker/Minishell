@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kthierry <kthierry@student.42.fr>          +#+  +:+       +#+        */
+/*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 15:23:09 by kthierry          #+#    #+#             */
-/*   Updated: 2022/10/28 15:23:13 by kthierry         ###   ########.fr       */
+/*   Updated: 2022/11/08 16:51:24 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@ char	*ft_strstr(char *str, char *to_find)
 {
 	int	i;
 	int	j;
+	int	y;
 
 	i = 0;
 	while (str[i] != '\0')
 	{
 		j = 0;
-		while (to_find[j] == str[i + j])
+		y = county(y, str);
+		while (to_find[j] == str[i + j] && (y != 0 && y % 2 == 0))
 		{
 			if (to_find[j + 1] == '\0')
 			{
@@ -76,4 +78,26 @@ void	*ft_memset(void *pointer, int value, size_t count)
 		i++;
 	}
 	return (pointer);
+}
+
+char	*ft_strstr_exit(char *str, char *to_find)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		j = 0;
+		while (to_find[j] == str[i + j])
+		{
+			if (to_find[j + 1] == '\0')
+			{
+				return (str + i);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (0);
 }

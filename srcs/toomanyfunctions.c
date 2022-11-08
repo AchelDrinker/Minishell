@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 15:45:51 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/02 15:35:37 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/08 16:58:24 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,16 @@ void	built_in_cd(char *path, t_List *environ, char *oldpwd)
 		g_status = 1;
 		ft_putstr_fd(RED"error chdir\n"RESET, 2);
 	}
+}
+
+void	ft_error_exec1(void)
+{
+	g_status = 1;
+	perror("path");
+}
+
+void	ft_error_exec2(char *line)
+{
+	ft_error_path(line);
+	g_status = 127;
 }

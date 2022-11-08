@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 10:51:42 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/07 16:46:38 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/08 16:12:21 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	ft_splitlen(char const *s, char c)
 	return (len);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char *s, char c)
 {
 	char	**str;
 	int		i;

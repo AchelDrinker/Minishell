@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:04:41 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/07 15:05:06 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/08 16:43:06 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ int	countfork(char *line)
 	int	i;
 	int	countquotes;
 	int	countdoublequotes;
-	int	countfork;
+	int	countforks;
 
-	countfork = 0;
+	countforks = 0;
 	countquotes = 0;
 	countdoublequotes = 0;
 	i = 0;
@@ -76,10 +76,10 @@ int	countfork(char *line)
 			countdoublequotes += 1;
 		else if (line[i] == '|' && countdoublequotes % 2 == 0 \
 		&& countquotes % 2 == 0)
-			countfork += 1;
+			countforks += 1;
 		i++;
 	}
-	return (countfork);
+	return (countforks);
 }
 
 int	main(int argc, char **argv, char **envp)

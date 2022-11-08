@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 10:05:05 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/07 15:04:49 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/08 17:01:45 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,10 @@ void	check_exec(t_List *environ, char *line)
 				exec_com(split_strings, split_line, 0, 0);
 		}
 		else
-		{
-			g_status = 1;
-			perror("path");
-		}
+			ft_error_exec1();
 	}
 	else
-	{
-		ft_error_path(line);
-		g_status = 127;
-	}
+		ft_error_exec2(line);
 }
 
 void	exec_cmd(char **split, char **split_line)
@@ -74,6 +68,7 @@ void	exec_cmd(char **split, char **split_line)
 	}
 	else
 	{
+		g_status = 0;
 		execve(split[0], split_line, NULL);
 		exit(EXIT_FAILURE);
 	}

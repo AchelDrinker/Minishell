@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:29:59 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/02 15:34:57 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/08 17:08:30 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_re_out(char **arg, char **fich, t_List *environ)
 	fd = open(fich[0], O_CREAT | O_RDWR, 0777);
 	if (fd == -1)
 	{
-		g_status = 1;
+		g_status = 258;
 		ft_putstr_fd(RED"error\n"RESET, 2);
 		return ;
 	}
@@ -44,7 +44,7 @@ void	ft_re_in(char **arg, char **fich, t_List *environ)
 	fd = open(fich[0], O_RDWR, 0777);
 	if (fd == -1)
 	{
-		g_status = 1;
+		g_status = 258;
 		ft_putstr_fd(RED"error\n"RESET, 2);
 		return ;
 	}
@@ -71,7 +71,7 @@ void	ft_re_app(char *arg, char **fich, t_List *environ)
 		fd = open(fich[0], O_RDWR | O_CREAT);
 		if (fd == -1)
 		{
-			g_status = 1;
+			g_status = 258;
 			printf("error\n");
 		}
 	}

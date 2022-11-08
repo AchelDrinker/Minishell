@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 10:09:59 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/07 16:46:44 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/08 16:58:13 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char	*ft_strcat(char *s1, const char *s2);
 int		find_env_pos(t_List *environ, char *str);
 void	check_status(char *line, char *line2);
 char	*ft_strstr(char *str, char *to_find);
-char	**ft_split(char const *s, char c);
+char	**ft_split(char *s, char c);
 int		ft_splitlen(char const *s, char c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 void	exec_cmd(char **split, char **split_line);
@@ -122,8 +122,8 @@ int		check_iii(char *line, int i, int iii);
 int		do_count(char *line, int i, int count, int iii);
 char	**ft_split_exe(char const *s, char c);
 void	exec_bin_ls(char **sp, char **sl, int i, int j);
-int		county(int y, const char *s);
-char	**returnstr(char const *s, char c, char **str);
+int		county(int y, char *s);
+char	**returnstr(char *s, char c, char **str);
 t_List	*prompt(char *line, char **parsed_input, t_List *environ, int i);
 int		countfork(char *line);
 void	parsing_this1(char **parsed_shit,
@@ -134,5 +134,9 @@ void	parsing_this3(char **parsed_shit,
 			char *line, t_List *environ);
 void	parsing_this4(char **parsed_shit,
 			char *line, t_List *environ);
+char	*ft_strdup(char *src);
+char	*ft_strstr_exit(char *str, char *to_find);
+void	ft_error_exec2(char *line);
+void	ft_error_exec1(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 13:52:00 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/07 14:39:35 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/08 17:07:09 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,7 @@ int	isredirection(char *line)
 	else if (ft_strstr(line, " > ") != 0)
 		return (0);
 	else
-	{
-		g_status = 258;
 		return (1);
-	}
 }
 
 void	im_parsing_this_shit(char **parsed_shit,

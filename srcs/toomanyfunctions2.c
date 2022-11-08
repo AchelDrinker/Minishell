@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 16:44:12 by humartin          #+#    #+#             */
-/*   Updated: 2022/10/31 13:03:14 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/08 17:05:10 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	ft_echo_n(char *line, int i, t_List *environ)
 		{
 			c = printthis(line, count, iii, c);
 		}
+		g_status = 0;
 	}
 }
 
@@ -79,6 +80,7 @@ void	ft_echo(char *line, int i, t_List *environ)
 			c = printthis(line, count, iii, c);
 		}
 		write(1, "\n", 1);
+		g_status = 0;
 	}
 }
 

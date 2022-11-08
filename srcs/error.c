@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 12:00:07 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/07 14:56:23 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/08 16:49:11 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	ft_checker_exit(char *line)
 
 	count = 0;
 	i = 0;
-	substr = ft_strstr(line, "exit");
+	substr = ft_strstr_exit(line, "exit");
 	if (!substr)
 		return (0);
 	while (substr[i] != '\0' && substr[i] != '|')
