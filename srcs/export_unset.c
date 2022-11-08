@@ -6,18 +6,18 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 15:54:20 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/08 19:17:55 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/08 19:26:43 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-t_List	*do_things(t_List *environ, char *line2)
-{
-	environ = addat(environ, line2, 1);
-	environ = check_double_env(environ);
-	return (environ);
-}
+// t_List	*do_things(t_List *environ, char *line2)
+// {
+// 	environ = addat(environ, line2, 1);
+// 	environ = check_double_env(environ);
+// 	return (environ);
+// }
 
 t_List	*check_export2(char *line, int i, int ii, t_List *environ)
 {
@@ -44,7 +44,7 @@ t_List	*check_export2(char *line, int i, int ii, t_List *environ)
 	}
 	else
 		line2[ii++] = '\0';
-	environ = do_things(environ, line2);
+	environ = addat(environ, line2, 1);
 	return (environ);
 }
 
