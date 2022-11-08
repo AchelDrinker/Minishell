@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 02:38:06 by kthierry          #+#    #+#             */
-/*   Updated: 2022/11/07 14:29:24 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/08 19:20:51 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,10 @@ char	**ft_split_exe(char const *s, char c)
 	ptr = calloc((ft_strcount(str, c) + 1), sizeof(char *));
 	ft_alloc_all(str, c, w, ptr);
 	return (ptr);
+}
+
+void	ft_error_exec2(char *line)
+{
+	ft_error_path(line);
+	g_status = 127;
 }

@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 10:09:59 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/08 16:58:13 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/08 18:06:38 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,5 +138,6 @@ char	*ft_strdup(char *src);
 char	*ft_strstr_exit(char *str, char *to_find);
 void	ft_error_exec2(char *line);
 void	ft_error_exec1(void);
+t_List	*check_double_env(t_List *environ);
 
 #endif

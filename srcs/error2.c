@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 20:44:04 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/02 15:36:18 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/08 19:20:33 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,10 @@ void	check_status(char *line, char *line2)
 		printf("Error value : %d\n", g_status);
 	else
 		return ;
+}
+
+void	ft_error_exec1(void)
+{
+	g_status = 1;
+	perror("path");
 }

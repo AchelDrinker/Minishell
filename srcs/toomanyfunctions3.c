@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 11:07:18 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/08 16:51:44 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/08 19:17:54 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,25 @@ char	*ft_strdup(char *src)
 	}
 	copy[i] = '\0';
 	return (copy);
+}
+
+t_List	*ft_unsetenv(t_List *environ, char *line)
+{
+	int		i;
+	t_List	*prec;
+
+	prec = environ;
+	i = 0;
+	while (ft_strnstr(prec, line, ft_strlen(line)) == 0 && prec->next != NULL)
+	{
+		prec = prec->next;
+		i++;
+	}
+	if (prec->next == NULL)
+		return (environ);
+	else
+	{
+		environ = freeat(environ, i);
+		return (environ);
+	}
 }

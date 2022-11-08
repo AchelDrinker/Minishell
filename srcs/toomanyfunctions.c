@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 15:45:51 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/08 16:58:24 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/08 19:19:57 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,54 @@ void	built_in_cd(char *path, t_List *environ, char *oldpwd)
 	}
 }
 
-void	ft_error_exec1(void)
+t_List	*checkthis(t_List *environ,	char *line)
 {
-	g_status = 1;
-	perror("path");
+	int		i;
+	t_List	*prec;
+
+	prec = environ;
+	i = 0;
+	while ((ft_strnstr(prec, line, ft_strlen(line)) == 0) && prec != NULL)
+	{
+			prec = prec->next;
+			i++;
+	}
+	if (prec == NULL)
+		return (environ);
+	else
+	{
+		prec = prec->next;
+		while ((ft_strnstr(prec, line,
+					ft_strlen(line)) == 0) && prec->next != NULL)
+		{
+				prec = prec->next;
+				i++;
+		}
+		if (prec != NULL)
+			environ = freeat(environ, i);
+		return (environ);
+	}
 }
 
-void	ft_error_exec2(char *line)
+t_List	*check_double_env(t_List *environ)
 {
-	ft_error_path(line);
-	g_status = 127;
+	char	*line;
+	int		i;
+	t_List	*prec;
+
+	prec = environ;
+	line = malloc(sizeof(t_Cell));
+	while (prec->next != NULL)
+	{
+		i = 0;
+		while (prec->data[i] != '=' && prec->data[i] != '\0')
+		{
+			line[i] = prec->data[i];
+			i++;
+		}
+		line[i] = '\0';
+		environ = checkthis(environ, line);
+		prec = prec->next;
+	}
+	return (environ);
 }
