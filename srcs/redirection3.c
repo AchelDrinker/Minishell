@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 23:06:51 by kthierry          #+#    #+#             */
-/*   Updated: 2022/11/08 17:08:29 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/10 15:48:08 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	**ft_while(char **line, int i, char *word)
 	while (1)
 	{
 		line[i] = readline("heredoc> ");
-		if (!ft_check_corresp_word(line[i], word))
+		if (strnstr(line[i], word, ft_strlen(word)) != 0)
 			break ;
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 15:23:09 by kthierry          #+#    #+#             */
-/*   Updated: 2022/11/08 16:51:24 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/10 15:08:38 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,12 @@ char	*ft_strstr(char *str, char *to_find)
 {
 	int	i;
 	int	j;
-	int	y;
 
 	i = 0;
 	while (str[i] != '\0')
 	{
 		j = 0;
-		y = county(y, str);
-		while (to_find[j] == str[i + j] && (y != 0 && y % 2 == 0))
+		while (to_find[j] == str[i + j])
 		{
 			if (to_find[j + 1] == '\0')
 			{
@@ -80,24 +78,23 @@ void	*ft_memset(void *pointer, int value, size_t count)
 	return (pointer);
 }
 
-char	*ft_strstr_exit(char *str, char *to_find)
+char	*ft_strdup(char *src)
 {
-	int	i;
-	int	j;
+	int		i;
+	char	*copy;
 
 	i = 0;
-	while (str[i] != '\0')
+	while (src[i] != '\0')
+		i++;
+	copy = (char *) malloc(sizeof(char) * i);
+	if (copy == NULL)
+		return (0);
+	i = 0;
+	while (src[i] != '\0')
 	{
-		j = 0;
-		while (to_find[j] == str[i + j])
-		{
-			if (to_find[j + 1] == '\0')
-			{
-				return (str + i);
-			}
-			j++;
-		}
+		copy[i] = src[i];
 		i++;
 	}
-	return (0);
+	copy[i] = '\0';
+	return (copy);
 }

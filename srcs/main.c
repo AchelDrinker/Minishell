@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:04:41 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/08 16:43:06 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/14 11:33:03 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,13 @@ t_List	*check_input(char *line, t_List *environ)
 	if ((isbuiltin(line) == 1) || \
 	(isbuiltin(line) == 0 && isredirection(line) == 0))
 	{
-		check_redirection(line, environ);
-		if (isredirection(line) == 1)
+		if(check_redirection(line, environ) == 1)
 			check_exec(environ, line);
 	}
 	else
 	{
 		if (check_path(environ) == 0)
-		{
 			check_env(line, "env", environ);
-		}
 		else if (check_path(environ) == 1 && ft_strstr(line, "env") != NULL)
 			ft_error_path(line);
 		check_status(line, "echo $?");
@@ -62,9 +59,9 @@ int	countfork(char *line)
 	int	i;
 	int	countquotes;
 	int	countdoublequotes;
-	int	countforks;
+	int	countfork;
 
-	countforks = 0;
+	countfork = 0;
 	countquotes = 0;
 	countdoublequotes = 0;
 	i = 0;
@@ -76,10 +73,10 @@ int	countfork(char *line)
 			countdoublequotes += 1;
 		else if (line[i] == '|' && countdoublequotes % 2 == 0 \
 		&& countquotes % 2 == 0)
-			countforks += 1;
+			countfork += 1;
 		i++;
 	}
-	return (countforks);
+	return (countfork);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -98,10 +95,9 @@ int	main(int argc, char **argv, char **envp)
 	i = 0;
 	header();
 	signal_trap();
-	environ = prompt(line, parsed_input, environ, i);
+	prompt(line, parsed_input, environ, i);
 	environ = freelist(environ);
 	g_status = 0;
 	free(line);
-	rl_clear_history ();
 	return (0);
 }

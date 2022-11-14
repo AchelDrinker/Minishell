@@ -6,13 +6,13 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 13:33:02 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/02 15:36:00 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/10 15:31:17 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	check_iii(char *line, int i, int iii)
+char	check_iii(char *line, int i, char iii)
 {
 	while (line[i] != '\0')
 	{
@@ -32,8 +32,11 @@ int	check_iii(char *line, int i, int iii)
 	return (iii);
 }
 
-int	do_count(char *line, int i, int count, int iii)
+int	do_count(char *line, int i, char iii)
 {
+	int	count;
+
+	count = 0;
 	while (line[i] != '\0')
 	{
 		if (line[i] == iii)

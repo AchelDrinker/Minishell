@@ -6,18 +6,11 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 15:54:20 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/08 19:26:43 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/10 12:57:46 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-// t_List	*do_things(t_List *environ, char *line2)
-// {
-// 	environ = addat(environ, line2, 1);
-// 	environ = check_double_env(environ);
-// 	return (environ);
-// }
 
 t_List	*check_export2(char *line, int i, int ii, t_List *environ)
 {
@@ -25,7 +18,7 @@ t_List	*check_export2(char *line, int i, int ii, t_List *environ)
 	char	*line2;
 
 	c = 0;
-	line2 = malloc(sizeof(char *) * 10000);
+	line2 = malloc(sizeof(t_Cell));
 	i++;
 	while (line[i] != '\0')
 	{
@@ -75,6 +68,27 @@ t_List	*check_export(char *line, char *str, t_List *environ)
 		return (environ);
 }
 
+t_List	*ft_unsetenv(t_List *environ, char *line)
+{
+	int		i;
+	t_List	*prec;
+
+	prec = environ;
+	i = 0;
+	while (ft_strnstr(prec, line, ft_strlen(line)) == 0 && prec->next != NULL)
+	{
+		prec = prec->next;
+		i++;
+	}
+	if (prec->next == NULL)
+		return (environ);
+	else
+	{
+		environ = freeat(environ, i);
+		return (environ);
+	}
+}
+
 t_List	check_unset2(char *line, char *line2, int i, t_List *environ)
 {
 	int	ii;
@@ -97,7 +111,7 @@ t_List	check_unset2(char *line, char *line2, int i, t_List *environ)
 	else
 	{
 		g_status = 1;
-		ft_putstr_fd(RED"error unset\n"RESET, 2);
+		ft_putstr_fd(RED"error unset"RESET, 2);
 		return (*environ);
 	}
 }
@@ -105,10 +119,12 @@ t_List	check_unset2(char *line, char *line2, int i, t_List *environ)
 t_List	*check_unset(char *line, char *str, t_List *environ)
 {
 	int		i;
+	int		ii;
 	char	*line2;
 
 	line2 = malloc(sizeof(t_Cell));
 	i = 0;
+	ii = 0;
 	while (line[i] == str[i] && (line[i] != '\0' || str[i] != '\0'))
 		i++;
 	if (i == 5)

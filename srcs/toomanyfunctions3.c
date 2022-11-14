@@ -6,45 +6,69 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 11:07:18 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/08 19:17:54 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/14 10:10:48 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	county(int quote, char *s)
+int	countz(int z, const char *s)
 {
-	if (*s == 34 && quote >= 0)
-		quote += 1;
-	else if (*s == 39 && quote <= 0)
-		quote -= 1;
-	return (quote);
+	if (*s == '"')
+		return (z += 1);
+	else
+		return (z);
 }
 
-char	**returnstr(char *s, char c, char **str)
+int	returni(char const *s, char c, char **str, int z)
 {
 	size_t	len;
 	int		i;
-	int		y;
 
 	i = 0;
-	y = 0;
-	len = 0;
-	while (*s && ++len)
+	while (*s != '\0')
 	{
-		y = county(y, s);
-		++s;
-		if (y != 0 && y % 2 == 0 && *s == c)
+		if (*s != c)
 		{
-			str[i] = ft_substr(s - len, 0, len);
 			len = 0;
-			++s;
-			i++;
+			while (*s && *s != c && ++len)
+			{
+				z = countz(z, s);
+				++s;
+			}
+			if (z % 2 == 0)
+				str[i++] = ft_substr(s - len, 0, len);
 		}
+		else
+			++s;
 	}
-	if (i == 0)
-		str[i] = ft_strdup(s - len);
-	str[i + 1] = NULL;
+	return (i);
+}
+
+char	**returnstr(char const *s, char c, char **str, int z)
+{
+	size_t	len;
+	int		i;
+
+	i = 0;
+	while (*s != '\0')
+	{
+		if (*s != c)
+		{
+			len = 0;
+			while (*s && ++len)
+			{
+				z = countz(z, s);
+				if (*s == c && z % 2 == '0')
+					break ;
+				++s;
+			}
+			if (z % 2 == '0' || z == '0')
+				str[i++] = ft_substr(s - len, 0, len);
+		}
+		else
+			++s;
+	}
 	return (str);
 }
 
@@ -63,46 +87,4 @@ char	**parse(char **L, char *line, char c)
 		i++;
 	}
 	return (L);
-}
-
-char	*ft_strdup(char *src)
-{
-	int		i;
-	char	*copy;
-
-	i = 0;
-	while (src[i] != '\0')
-		i++;
-	copy = (char *) malloc(sizeof(char) * i);
-	if (copy == NULL)
-		return (0);
-	i = 0;
-	while (src[i] != '\0')
-	{
-		copy[i] = src[i];
-		i++;
-	}
-	copy[i] = '\0';
-	return (copy);
-}
-
-t_List	*ft_unsetenv(t_List *environ, char *line)
-{
-	int		i;
-	t_List	*prec;
-
-	prec = environ;
-	i = 0;
-	while (ft_strnstr(prec, line, ft_strlen(line)) == 0 && prec->next != NULL)
-	{
-		prec = prec->next;
-		i++;
-	}
-	if (prec->next == NULL)
-		return (environ);
-	else
-	{
-		environ = freeat(environ, i);
-		return (environ);
-	}
 }

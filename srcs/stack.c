@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 10:04:36 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/02 15:36:40 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/10 12:15:28 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*getat(t_List *L, int pos)
 	if (isemptylist(L))
 	{
 		g_status = 1;
-		printf("error : empty list\n");
+		ft_putstr_fd("error : empty list\n", 2);
 		return (NULL);
 	}
 	while (i < pos)

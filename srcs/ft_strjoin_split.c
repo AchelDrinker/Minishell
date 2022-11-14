@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 10:51:42 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/08 16:12:21 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/10 15:09:21 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,11 @@ char	*ft_strcpy_join(char *dst, const char *src)
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*buff;
+	int		len;
 
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
+	len = ft_strlen(s1) + ft_strlen(s2);
 	buff = (char *)malloc(sizeof(char *) * 10000);
 	if (buff == NULL)
 		return (NULL);
@@ -80,17 +82,29 @@ int	ft_splitlen(char const *s, char c)
 	return (len);
 }
 
-char	**ft_split(char *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**str;
+	int		z;
 	int		i;
 
 	i = 0;
+	z = 0;
 	if (!s)
 		return (0);
 	str = malloc(sizeof(char *) * (ft_splitlen(s, c) + 1));
 	if (!str)
 		return (0);
-	str = returnstr(s, c, str);
+	if(countfork((char *)s) > 0)
+	{
+		i = returni(s, c, str, z);
+		str = returnstr(s, c, str, z);
+		str[i] = NULL;
+	}
+	else
+	{
+		str[0] = ft_strdup((char *)s);
+		str[1] = NULL;
+	}
 	return (str);
 }
