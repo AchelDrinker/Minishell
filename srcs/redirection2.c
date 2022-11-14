@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 15:29:59 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/10 12:16:30 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/14 14:04:27 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_re_in(char **arg, char **fich, t_List *environ)
 	{
 		g_status = 0;
 		dup2(fd, 0);
-		check_exec(environ, arg[0]);
+		check_input(arg[0], environ);
 		exit(EXIT_FAILURE);
 	}
 	waitpid(child1.pid, NULL, 0);

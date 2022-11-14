@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 23:06:51 by kthierry          #+#    #+#             */
-/*   Updated: 2022/11/10 15:48:08 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/14 16:02:11 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ char	**ft_while(char **line, int i, char *word)
 			break ;
 		i++;
 	}
+	line[i++] = NULL;
 	return (line);
 }
 
@@ -65,7 +66,7 @@ void	ft_redi_delimiteur(char **arg, char *word, t_List *environ, char **fd)
 	if (!ft_check_corresp(arg[0], "cat"))
 	{
 		arg2 = ft_split_exe(arg[1], '>');
-		fd = ft_split(arg2[1], ' ');
+		fd = ft_split_exe(arg2[1], ' ');
 		i = ft_while_i(line);
 		ft_while2(i, fd, environ, line);
 		g_status = 0;

@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 12:00:07 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/10 13:26:58 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/14 16:07:12 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_error_echo(char *line)
 	ft_putstr_fd(line, 2);
 }
 
-void	check_exit(char *line, char *s1)
+int	check_exit(char *line, char *s1)
 {
 	char	*s2;
 
@@ -50,21 +50,17 @@ void	check_exit(char *line, char *s1)
 	{
 		if (ft_checker_exit(line) > 0)
 			g_status = 255;
-		if (ft_strcmp(line, s1) == 0)
+		if (ft_strcmp(line, s1) == 0 || ft_strcmp(line, s2) == 0)
 			exit(0);
-		while (ft_strcmp(line, s2) == 0)
-		{
-			break ;
+		else if (ft_single_quotes(line, s1) == 4)
 			exit(0);
-		}
-		while (ft_single_quotes(line, s1) == 4)
-			exit(0);
-		while (ft_checker_exit(line) >= 1)
+		if (ft_checker_exit(line) > 1)
 		{
 			ft_putstr_fd(RED"exit: too much arg:"RESET, 2);
-			break ;
+			return (1);
 		}
 	}
+	return (0);
 }
 
 int	ft_checker_exit(char *line)

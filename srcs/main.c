@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:04:41 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/14 11:33:03 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/14 16:12:07 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,21 @@ int	isbuiltin(char *line)
 
 t_List	*check_input(char *line, t_List *environ)
 {
-	if ((isbuiltin(line) == 1) || \
+	if (ft_checker_exit(line) > 1)
+		ft_error_exit();
+	else if ((isbuiltin(line) == 1) || \
 	(isbuiltin(line) == 0 && isredirection(line) == 0))
 	{
-		if(check_redirection(line, environ) == 1)
+		if (check_redirection(line, environ) == 1)
 			check_exec(environ, line);
 	}
 	else
 	{
 		if (check_path(environ) == 0)
+		{
 			check_env(line, "env", environ);
+			environ = check_cd(line, "cd ..", environ, 0);
+		}
 		else if (check_path(environ) == 1 && ft_strstr(line, "env") != NULL)
 			ft_error_path(line);
 		check_status(line, "echo $?");
@@ -49,7 +54,6 @@ t_List	*check_input(char *line, t_List *environ)
 		check_pwd(line, "pwd", environ);
 		environ = check_export(line, "export", environ);
 		environ = check_unset(line, "unset", environ);
-		environ = check_cd(line, "cd ..", environ, 0);
 	}
 	return (environ);
 }

@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 11:46:21 by kthierry          #+#    #+#             */
-/*   Updated: 2022/11/10 15:49:39 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/14 12:39:59 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char *line, t_List *environ)
 
 	fd = NULL;
 	parsed_shit = ft_split_exe(line, '<');
-	fd = parse(fd, parsed_shit[1], ' ');
+	fd = ft_split_exe(parsed_shit[1], ' ');
 	ft_redi_delimiteur(parsed_shit, fd[0], environ, fd);
 }
 
@@ -30,7 +30,7 @@ char *line, t_List *environ)
 
 	fd = NULL;
 	parsed_shit = ft_split_exe(line, '>');
-	fd = ft_split(parsed_shit[1], ' ');
+	fd = ft_split_exe(parsed_shit[1], ' ');
 	ft_re_app(parsed_shit[0], fd, environ);
 }
 
@@ -40,8 +40,8 @@ char *line, t_List *environ)
 	char	**fd;
 
 	fd = NULL;
-	parsed_shit = parse(parsed_shit, line, '<');
-	fd = ft_split(parsed_shit[1], ' ');
+	parsed_shit = ft_split_exe(line, '<');
+	fd = ft_split_exe(parsed_shit[1], ' ');
 	ft_re_in(parsed_shit, fd, environ);
 }
 
@@ -52,6 +52,6 @@ char *line, t_List *environ)
 
 	fd = NULL;
 	parsed_shit = ft_split_exe(line, '>');
-	fd = ft_split(parsed_shit[1], ' ');
+	fd = ft_split_exe(parsed_shit[1], ' ');
 	ft_re_out(parsed_shit, fd, environ);
 }

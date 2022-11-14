@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 10:51:42 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/10 15:09:21 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/14 13:11:03 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ char	**ft_split(char const *s, char c)
 	str = malloc(sizeof(char *) * (ft_splitlen(s, c) + 1));
 	if (!str)
 		return (0);
-	if(countfork((char *)s) > 0)
+	if (countfork((char *)s) > 0)
 	{
 		i = returni(s, c, str, z);
 		str = returnstr(s, c, str, z);

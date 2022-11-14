@@ -6,7 +6,7 @@
 /*   By: humartin <humartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 10:09:59 by humartin          #+#    #+#             */
-/*   Updated: 2022/11/10 15:20:51 by humartin         ###   ########.fr       */
+/*   Updated: 2022/11/14 16:12:06 by humartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	signal_trap(void);
 void	signal_exec(void);
 void	handle_exec(int signum);
 void	handle_shell(int signum);
-void	check_exit(char *line, char *s1);
+int		check_exit(char *line, char *s1);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_check_quotes(char *line, int i);
 int		ft_checker_exit(char *line);
@@ -139,5 +139,6 @@ int		between_quote(const char *line, char *sep);
 void	ft_error_exec2(char *line);
 void	ft_error_exec1(void);
 char	*ft_strdup(char *src);
+void	ft_error_exit(void);
 
 #endif
